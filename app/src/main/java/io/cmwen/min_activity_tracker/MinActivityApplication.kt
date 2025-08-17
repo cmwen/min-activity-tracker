@@ -1,6 +1,14 @@
-// Hilt disabled for now; keep placeholder Application if needed later
 package io.cmwen.min_activity_tracker
 
 import android.app.Application
+import io.cmwen.min_activity_tracker.di.AppContainer
 
-class MinActivityApplication : Application()
+class MinActivityApplication : Application() {
+    lateinit var container: AppContainer
+        private set
+
+    override fun onCreate() {
+        super.onCreate()
+        container = AppContainer(this)
+    }
+}

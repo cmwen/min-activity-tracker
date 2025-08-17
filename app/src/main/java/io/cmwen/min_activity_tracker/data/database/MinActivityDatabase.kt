@@ -15,5 +15,7 @@ import androidx.room.RoomDatabase
 )
 abstract class MinActivityDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
-    // Additional DAOs can be added here
+    abstract fun deviceEventDao(): DeviceEventDao
+    abstract fun batterySampleDao(): BatterySampleDao
+    abstract fun analysisReportDao(): AnalysisReportDao
 }
