@@ -42,6 +42,22 @@ android {
     }
 }
 
+ktlint {
+    android = true
+    ignoreFailures = true
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom("$rootDir/detekt.yml")
+    baseline = file("$rootDir/detekt-baseline.xml")
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
