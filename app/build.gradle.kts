@@ -55,9 +55,12 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
     // Hilt removed temporarily to avoid kapt/plugin incompatibilities with Kotlin 2.0
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
     // Kotlinx Serialization (JSON)
     implementation(libs.kotlinx.serialization.core)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
