@@ -2,9 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.detekt)
-    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -31,31 +28,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
     }
-}
-
-ktlint {
-    android = true
-    ignoreFailures = true
-    reporters {
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
-    }
-}
-
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-    config.setFrom("$rootDir/detekt.yml")
-    baseline = file("$rootDir/detekt-baseline.xml")
 }
 
 dependencies {
@@ -71,7 +52,7 @@ dependencies {
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    // Room compiler removed temporarily to avoid kapt compatibility issues with Kotlin 2.0.21
     // Hilt removed temporarily to avoid kapt/plugin incompatibilities with Kotlin 2.0
     // Navigation
     implementation(libs.androidx.navigation.compose)

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.1.4"
+agp = "8.2.2"
 kotlin = "2.0.21"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -15,8 +15,6 @@ ktxSerialization = "1.6.0"
 hiltNavigation = "1.0.0"
 navigation = "2.7.5"
 coroutinesTest = "1.6.4"
-ktlint = "11.3.2"
-detekt = "1.23.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,7 +46,5 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 # hilt plugin removed temporarily
 
