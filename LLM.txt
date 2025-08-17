@@ -1,0 +1,153 @@
+# Min Activity Tracker - LLM Project Information
+
+## Project Overview
+Min Activity Tracker is a privacy-first Android application for tracking phone and app usage patterns. The app collects detailed usage data locally and provides analysis-ready exports for personal insights and LLM-powered analysis.
+
+## Core Functionality
+- Track app usage sessions with start/end times and duration
+- Monitor battery consumption correlated with app usage
+- Optional location tracking for context-aware insights
+- Export data in JSON, CSV, and SQLite formats
+- Local-first architecture with no cloud dependencies
+
+## Technical Architecture
+- **Language**: Kotlin 100%
+- **UI Framework**: Jetpack Compose with Material 3
+- **Architecture**: Clean Architecture + MVVM
+- **Database**: Room (SQLite)
+- **Background Processing**: WorkManager + Foreground Services
+- **Dependency Injection**: Hilt
+- **Minimum SDK**: 29 (Android 10)
+- **Target SDK**: 34 (Android 14)
+
+## Data Schema
+### App Sessions
+```json
+{
+  "id": "string (UUID)",
+  "packageName": "string",
+  "appLabel": "string", 
+  "startTimestamp": "long (Unix timestamp)",
+  "endTimestamp": "long (Unix timestamp)",
+  "durationMs": "long",
+  "startBatteryPct": "int (0-100)",
+  "endBatteryPct": "int (0-100)",
+  "locationLatitude": "double (optional)",
+  "locationLongitude": "double (optional)",
+  "metadataJson": "string (optional JSON)"
+}
+```
+
+### Battery Samples
+```json
+{
+  "id": "string (UUID)",
+  "timestamp": "long (Unix timestamp)",
+  "levelPercent": "int (0-100)",
+  "chargingState": "enum (CHARGING, DISCHARGING, NOT_CHARGING, FULL)",
+  "temperature": "float (optional, Celsius)"
+}
+```
+
+### Device Events
+```json
+{
+  "id": "string (UUID)",
+  "type": "enum (SCREEN_ON, SCREEN_OFF, CHARGING_START, CHARGING_STOP)",
+  "timestamp": "long (Unix timestamp)",
+  "detailsJson": "string (optional JSON)"
+}
+```
+
+## Key Android Permissions
+- **Usage Access**: Required for app usage tracking (android.permission.PACKAGE_USAGE_STATS)
+- **Location**: Optional for context (ACCESS_FINE_LOCATION, ACCESS_BACKGROUND_LOCATION)
+- **Activity Recognition**: Optional for motion context
+- **Foreground Service**: For continuous background tracking
+
+## Project Structure
+```
+app/
+├── src/main/java/io/cmwen/min_activity_tracker/
+│   ├── data/              # Data layer (repositories, Room DAOs)
+│   ├── domain/            # Business logic (entities, use cases)
+│   ├── presentation/      # UI layer (Compose screens, ViewModels)
+│   ├── services/          # Background services
+│   └── utils/             # Utility classes
+├── src/test/              # Unit tests
+└── src/androidTest/       # Integration tests
+```
+
+## Development Stages
+1. **Foundation** (Weeks 1-2): Core infrastructure, database, basic UI
+2. **Data Collection** (Weeks 3-4): Permissions, background services, data tracking
+3. **Advanced Features** (Weeks 5-6): Location tracking, export system, analysis
+4. **Polish** (Weeks 7-8): Testing, optimization, production readiness
+5. **Open Source** (Week 9): CI/CD, documentation, community setup
+
+## Performance Requirements
+- Battery usage: Maximum 5% daily drain
+- Memory: Target under 100MB RAM
+- Storage: Efficient data compression with configurable retention
+
+## Privacy & Security
+- Local-first data storage (no cloud by default)
+- Granular permission controls
+- Optional data anonymization in exports
+- Open source for transparency
+- MIT license for maximum compatibility
+
+## Export Capabilities
+- **JSON**: Structured data for programmatic analysis
+- **CSV**: Compatible with Excel, R, Python pandas
+- **SQLite**: Direct database export for advanced analysis
+- **Anonymization**: Optional removal of sensitive identifiers
+
+## Error Handling Philosophy
+- Direct error reporting in UI with clear messaging
+- Automatic recovery mechanisms where possible
+- Graceful degradation when permissions unavailable
+- User guidance for manual resolution steps
+
+## Testing Strategy
+- **Unit Tests**: JUnit 5, MockK, Truth assertions
+- **Integration Tests**: Room testing, Hilt testing, WorkManager testing
+- **UI Tests**: Compose UI Testing (primary), Espresso (fallback)
+- Target: 80%+ code coverage for critical components
+
+## CI/CD Pipeline
+- GitHub Actions for automated builds
+- Automated testing on pull requests
+- Code quality checks (detekt, ktlint)
+- Security scanning
+- Automated release generation
+
+## LLM Integration Points
+1. **Usage Pattern Analysis**: Process exported session data to identify patterns
+2. **Battery Optimization**: Analyze battery correlation data for insights
+3. **Behavioral Insights**: Generate summaries from usage timeline data
+4. **Context Analysis**: Correlate location and app usage for lifestyle insights
+5. **Report Generation**: Create natural language summaries from raw data
+
+## Data Analysis Opportunities
+- Daily/weekly usage summaries
+- App addiction patterns detection
+- Productivity vs. entertainment time allocation
+- Battery drain correlation analysis
+- Location-based usage pattern recognition
+- Screen time trend analysis
+
+## Contributing
+- MIT license allows broad contribution and usage
+- Clean Architecture enables modular development
+- Comprehensive testing framework supports confident changes
+- Open source community features (issues, discussions, wiki)
+
+## Future Extensions
+- Wear OS companion app
+- Desktop sync applications
+- Advanced ML insights
+- Pluggable sync backends
+- Widget implementations
+
+This document provides comprehensive technical and functional information about Min Activity Tracker suitable for LLM analysis, code generation, and development assistance.
