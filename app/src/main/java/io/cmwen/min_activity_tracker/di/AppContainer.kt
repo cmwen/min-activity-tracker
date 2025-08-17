@@ -1,6 +1,7 @@
 package io.cmwen.min_activity_tracker.di
 
 import android.content.Context
+import io.cmwen.min_activity_tracker.core.error.ErrorHandler
 import io.cmwen.min_activity_tracker.data.database.DatabaseProvider
 import io.cmwen.min_activity_tracker.data.database.MinActivityDatabase
 import io.cmwen.min_activity_tracker.data.repository.*
@@ -10,6 +11,11 @@ import io.cmwen.min_activity_tracker.data.repository.*
  * Used instead of Hilt due to kapt compatibility issues with current toolchain.
  */
 class AppContainer(private val context: Context) {
+    
+    // Error handling
+    val errorHandler: ErrorHandler by lazy {
+        ErrorHandler.getInstance()
+    }
     
     // Database
     private val database: MinActivityDatabase by lazy {
