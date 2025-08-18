@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "io.cmwen.min_activity_tracker"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "io.cmwen.min_activity_tracker"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
