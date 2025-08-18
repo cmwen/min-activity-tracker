@@ -32,7 +32,7 @@ fun ErrorSnackbar(
             }
         }
     ) {
-        Text(text = error.getUserMessage())
+    Text(text = error.getUserMessage())
     }
 }
 
@@ -149,7 +149,7 @@ private fun AppError.getUserMessage(): String = when (this) {
     is AppError.PermissionError.NotificationAccessDenied -> "Notification access is required to monitor notifications."
     is AppError.DataCollectionError.ServiceUnavailable -> "Service is currently unavailable."
     is AppError.DataCollectionError.DataCorrupted -> "Data corruption detected."
-    is AppError.UnknownError -> message
+    is AppError.UnknownError -> this.msg
 }
 
 private fun AppError.getIcon(): ImageVector = when (this) {
