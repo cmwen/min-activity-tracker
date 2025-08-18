@@ -4,17 +4,18 @@ package io.cmwen.min_activity_tracker.core.error
  * Base sealed class for all application errors
  */
 sealed class AppError(
-    open val message: String,
-    open val cause: Throwable? = null
-) : Exception(message, cause) {
+    // Use non-conflicting parameter names to avoid hiding Throwable members
+    open val msg: String,
+    open val errorCause: Throwable? = null
+) : Exception(msg, errorCause) {
     
     /**
      * Database related errors
      */
     sealed class DatabaseError(
-        override val message: String,
-        override val cause: Throwable? = null
-    ) : AppError(message, cause) {
+        override val msg: String,
+        override val errorCause: Throwable? = null
+    ) : AppError(msg, errorCause) {
         
         class ConnectionError(cause: Throwable) : DatabaseError(
             "Database connection failed",
@@ -36,9 +37,9 @@ sealed class AppError(
      * Permission related errors
      */
     sealed class PermissionError(
-        override val message: String,
-        override val cause: Throwable? = null
-    ) : AppError(message, cause) {
+        override val msg: String,
+        override val errorCause: Throwable? = null
+    ) : AppError(msg, errorCause) {
         
         object UsageStatsNotGranted : PermissionError(
             "Usage Stats permission not granted"
@@ -57,9 +58,9 @@ sealed class AppError(
      * Data collection errors
      */
     sealed class DataCollectionError(
-        override val message: String,
-        override val cause: Throwable? = null
-    ) : AppError(message, cause) {
+        override val msg: String,
+        override val errorCause: Throwable? = null
+    ) : AppError(msg, errorCause) {
         
         class ServiceUnavailable(service: String) : DataCollectionError(
             "Service $service is unavailable"
@@ -74,7 +75,7 @@ sealed class AppError(
      * Unknown/unexpected errors
      */
     class UnknownError(
-        override val message: String = "An unexpected error occurred",
-        override val cause: Throwable? = null
-    ) : AppError(message, cause)
+        override val msg: String = "An unexpected error occurred",
+        override val errorCause: Throwable? = null
+    ) : AppError(msg, errorCause)
 }
