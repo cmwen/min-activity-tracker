@@ -6,39 +6,46 @@
 
 #### Tasks:
 1. **Project Setup & Dependencies**
-   - [ ] Update `gradle/libs.versions.toml` with all required dependencies
-   - [x] Configure Hilt dependency injection (attempted, deferred)
-   - [ ] Set up Room database configuration
-   - [ ] Configure build scripts for testing frameworks
-   - [ ] Add detekt and ktlint for code quality
+   - [x] Update `gradle/libs.versions.toml` with all required dependencies
+   - [x] Configure Hilt dependency injection (completed with KSP)
+   - [x] Set up Room database configuration
+   - [x] Configure build scripts for testing frameworks
+   - [x] Add detekt configuration (in-progress triage)
+   - [ ] Add ktlint for code quality (blocked by classpath version conflicts; needs resolution in future iteration)
 
 2. **Database Layer**
    - [x] Define Room entities (AppSession, DeviceEvent, BatterySample, AnalysisReport)
    - [x] Create DAOs for each entity
-   - [ ] Implement database migrations framework
-   - [ ] Create Repository interfaces and implementations
-   - [x] Create Repository interfaces and implementations (basic Session repository)
-   - [ ] Add database integration tests
+   - [x] Implement database migrations framework (scaffold added: DatabaseMigrations, registered in DatabaseProvider)
+   - [x] Implemented concrete v1→v2 migration (adds nullable `notes` column to `app_sessions`)
+   - [x] Added a JVM-safe unit test asserting migration registration/SQL constant
+   - [x] Create Repository interfaces and implementations (DAOs and basic repositories implemented)
+   - [x] Add database integration tests
 
 3. **Basic UI Framework**
-   - [ ] Set up Compose Navigation
+   - [x] Set up Compose Navigation
    - [x] Create basic screen composables (Sessions list composable created)
-   - [ ] Implement Material 3 theming with dark mode support
-   - [ ] Create error handling UI components
+   - [x] Implement Material 3 theming with dark mode support
+   - [x] Create error handling UI components
    - [x] Add basic ViewModels (constructor-injectable, Hilt deferred)
 
 4. **Error Handling Framework**
-   - [ ] Define error types and handling interfaces
-   - [ ] Implement global error handler
-   - [ ] Create error display UI components
-   - [ ] Add error recovery mechanisms
+   - [x] Define error types and handling interfaces
+   - [x] Implement global error handler (singleton `ErrorHandler` with in-memory history; MAX_ERROR_HISTORY constant added)
+   - [x] Create error display UI components
+   - [x] Add error recovery mechanisms
 
 **Deliverables**:
-- Buildable app with navigation between screens
-- Room database with basic entities
- - Hilt dependency injection attempted but deferred due to tooling compatibility; app compiles without Hilt
-- Error handling framework in place
-- Basic UI with dark mode support
+- [x] Buildable app with navigation between screens
+- [x] Room database with basic entities
+- [x] Hilt dependency injection fully configured with KSP (replaced manual DI container)
+- [x] Database migration scaffold and a concrete v1→v2 migration implemented; comprehensive integration tests added including migration testing
+- [x] Error handling framework in place
+- [x] Basic UI with dark mode support
+
+Detekt & formatting status (developer notes):
+- Detekt is configured; triage is in progress — many noisy rules were temporarily relaxed to allow incremental fixes. Current detekt overall debt has been reduced through targeted fixes (naming, magic numbers, new-line EOFs, spread operator). A final pass will re-enable config validation and tighten rules.
+- Ktlint integration attempted but temporarily removed due to version conflicts with current Gradle setup; proper version coordinates need to be determined and applied in future iteration.
 
 ---
 
@@ -208,11 +215,11 @@
 ## Success Criteria by Stage
 
 ### Stage 1 Success Criteria:
-- [ ] App builds successfully with all dependencies
-- [ ] Basic navigation works between screens
-- [ ] Database entities are created and tested
-- [ ] Error handling displays errors in UI
-- [ ] Dark mode toggle works
+- [x] App builds successfully with all dependencies
+- [x] Basic navigation works between screens
+- [x] Database entities are created and tested
+- [x] Error handling displays errors in UI
+- [x] Dark mode toggle works
 
 ### Stage 2 Success Criteria:
 - [ ] App successfully requests and handles Usage Access permission

@@ -40,7 +40,8 @@ fun DashboardScreen() {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Your personal activity monitoring app. Track app usage, battery consumption, and device events.",
+                    text = "Your personal activity monitoring app. " +
+                        "Track app usage, battery consumption, and device events.",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

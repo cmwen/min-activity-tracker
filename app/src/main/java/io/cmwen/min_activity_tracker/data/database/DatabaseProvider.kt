@@ -14,6 +14,8 @@ object DatabaseProvider {
                 MinActivityDatabase::class.java,
                 "min_activity_database"
             )
+                // Pass migrations explicitly to avoid an unnecessary spread copy
+                .addMigrations(DatabaseMigrations.MIGRATION_1_2)
                 .fallbackToDestructiveMigration() // For development phase
                 .build()
             INSTANCE = instance

@@ -1,14 +1,7 @@
 package io.cmwen.min_activity_tracker
 
 import android.app.Application
-import io.cmwen.min_activity_tracker.di.AppContainer
+import dagger.hilt.android.HiltAndroidApp
 
-class MinActivityApplication : Application() {
-    lateinit var container: AppContainer
-        private set
-
-    override fun onCreate() {
-        super.onCreate()
-        container = AppContainer(this)
-    }
-}
+@HiltAndroidApp
+class MinActivityApplication : Application()

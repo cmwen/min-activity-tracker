@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
         BatterySampleEntity::class,
         AnalysisReportEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class MinActivityDatabase : RoomDatabase() {

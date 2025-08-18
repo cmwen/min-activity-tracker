@@ -74,24 +74,11 @@ class SessionsViewModelTest {
         assertTrue(true)
     }
 
-    @Test
-    fun `SessionsViewModelFactory creates ViewModel`() {
-        // Given
-        val factory = SessionsViewModelFactory(mockRepository)
-
-        // When
-        val createdViewModel = factory.create()
-
-        // Then
-        assertNotNull(createdViewModel)
-        assertTrue(createdViewModel is SessionsViewModel)
-    }
-
     private fun createMockRepository(): SessionRepository {
         return object : SessionRepository {
             override fun observeSessions() = flow { emit(emptyList<AppSessionEntity>()) }
-            override suspend fun insert(session: AppSessionEntity) {}
-            override suspend fun deleteById(id: String) {}
+            override suspend fun insert(session: AppSessionEntity) = Unit
+            override suspend fun deleteById(id: String) = Unit
         }
     }
 }

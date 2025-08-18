@@ -24,7 +24,7 @@ class ErrorHandler {
         // Add to history (keep last 10 errors)
         val currentHistory = _errorHistory.value.toMutableList()
         currentHistory.add(0, error)
-        if (currentHistory.size > 10) {
+        if (currentHistory.size > MAX_ERROR_HISTORY) {
             currentHistory.removeAt(currentHistory.lastIndex)
         }
         _errorHistory.value = currentHistory
@@ -58,6 +58,8 @@ class ErrorHandler {
     }
     
     companion object {
+    private const val MAX_ERROR_HISTORY = 10
+
         @Volatile
         private var INSTANCE: ErrorHandler? = null
         

@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    id(libs.plugins.detekt.get().pluginId)
+    // ktlint temporarily disabled due to classpath version conflicts
 }
 
 android {
@@ -53,6 +57,11 @@ dependencies {
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
     // Room compiler removed temporarily to avoid kapt compatibility issues with Kotlin 2.0.21
     // Hilt removed temporarily to avoid kapt/plugin incompatibilities with Kotlin 2.0
     // Navigation
@@ -61,6 +70,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.core)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.room.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -68,3 +78,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+
+detekt {
+    toolVersion = libs.versions.detekt.get()
+    config.from(rootProject.file("detekt.yml"))
+    buildUponDefaultConfig = true
+}
+
+// ktlint configuration temporarily disabled due to classpath version conflicts
+// This is a known issue that needs to be resolved in a future iteration

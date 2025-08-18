@@ -22,17 +22,7 @@ class SessionRepositoryImplTest {
 
     @Test
     fun `observeSessions returns data from DAO`() = runTest {
-        // Given
-        val testSessions = listOf(
-            AppSessionEntity(
-                id = "1",
-                packageName = "com.test.app",
-                appLabel = "Test App",
-                startTimestamp = 1000L,
-                endTimestamp = 2000L,
-                durationMs = 1000L
-            )
-        )
+    // Given (placeholder data removed — mock returns empty list)
 
         // When
         val result = repository.observeSessions().first()
@@ -80,8 +70,8 @@ class SessionRepositoryImplTest {
     private fun createMockSessionDao(): SessionDao {
         return object : SessionDao {
             override fun getAllSessions() = flow { emit(emptyList<AppSessionEntity>()) }
-            override suspend fun insert(session: AppSessionEntity) {}
-            override suspend fun deleteById(id: String) {}
+            override suspend fun insert(session: AppSessionEntity) = Unit
+            override suspend fun deleteById(id: String) = Unit
         }
     }
 }

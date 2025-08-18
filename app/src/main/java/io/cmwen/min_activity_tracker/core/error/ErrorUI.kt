@@ -36,6 +36,8 @@ fun ErrorSnackbar(
     }
 }
 
+
+
 @Composable
 fun ErrorCard(
     error: AppError,

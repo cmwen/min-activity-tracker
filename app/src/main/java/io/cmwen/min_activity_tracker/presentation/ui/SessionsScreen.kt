@@ -111,13 +111,13 @@ fun SessionRow(session: AppSessionEntity) {
 }
 
 private fun formatDuration(durationMs: Long): String {
-    val seconds = durationMs / 1000
-    val minutes = seconds / 60
-    val hours = minutes / 60
+    val seconds = durationMs / MILLIS_IN_SECOND
+    val minutes = seconds / SECONDS_IN_MINUTE
+    val hours = minutes / MINUTES_IN_HOUR
     
     return when {
-        hours > 0 -> "${hours}h ${minutes % 60}m"
-        minutes > 0 -> "${minutes}m ${seconds % 60}s"
+        hours > 0 -> "${hours}h ${minutes % MINUTES_IN_HOUR}m"
+        minutes > 0 -> "${minutes}m ${seconds % SECONDS_IN_MINUTE}s"
         else -> "${seconds}s"
     }
 }
@@ -127,18 +127,23 @@ private fun formatTimestamp(timestamp: Long): String {
     return dateFormat.format(Date(timestamp))
 }
 
+private const val MILLIS_IN_SECOND = 1000L
+private const val SECONDS_IN_MINUTE = 60
+private const val MINUTES_IN_HOUR = 60
+private const val ONE_HOUR_MILLIS = 3_600_000L
+
 @Preview(showBackground = true)
 @Composable
 fun SessionRowPreview() {
     MinactivitytrackerTheme {
         SessionRow(
-            AppSessionEntity(
+                AppSessionEntity(
                 id = "preview",
                 packageName = "com.example.app",
                 appLabel = "Example App",
-                startTimestamp = System.currentTimeMillis() - 3600000, // 1 hour ago
-                endTimestamp = System.currentTimeMillis(),
-                durationMs = 3600000 // 1 hour
+                    startTimestamp = System.currentTimeMillis() - ONE_HOUR_MILLIS, // 1 hour ago
+                    endTimestamp = System.currentTimeMillis(),
+                    durationMs = ONE_HOUR_MILLIS // 1 hour
             )
         )
     }
