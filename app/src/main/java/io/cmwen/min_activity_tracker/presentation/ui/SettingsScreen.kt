@@ -1,7 +1,20 @@
 package io.cmwen.min_activity_tracker.presentation.ui
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,65 +26,66 @@ import io.cmwen.min_activity_tracker.ui.theme.MinactivitytrackerTheme
 @Composable
 fun SettingsScreen() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         Text(
             text = "Settings",
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 24.dp)
+            modifier = Modifier.padding(bottom = 24.dp),
         )
-        
+
         // Data Collection Settings
         SettingsSection(title = "Data Collection") {
             SettingsToggleItem(
                 title = "App Usage Tracking",
                 description = "Track which apps you use and for how long",
                 isChecked = false,
-                onToggle = { /* TODO: Implement */ }
+                onToggle = { /* TODO: Implement */ },
             )
-            
+
             SettingsToggleItem(
                 title = "Battery Monitoring",
                 description = "Monitor battery level and charging state",
                 isChecked = false,
-                onToggle = { /* TODO: Implement */ }
+                onToggle = { /* TODO: Implement */ },
             )
-            
+
             SettingsToggleItem(
                 title = "Location Tracking",
                 description = "Record location data (optional)",
                 isChecked = false,
-                onToggle = { /* TODO: Implement */ }
+                onToggle = { /* TODO: Implement */ },
             )
         }
-        
+
         Spacer(modifier = Modifier.height(24.dp))
-        
+
         // Privacy Settings
         SettingsSection(title = "Privacy") {
             SettingsClickableItem(
                 title = "Data Export",
                 description = "Export your data as JSON or CSV",
-                onClick = { /* TODO: Implement */ }
+                onClick = { /* TODO: Implement */ },
             )
-            
+
             SettingsClickableItem(
                 title = "Clear Data",
                 description = "Delete all collected data",
-                onClick = { /* TODO: Implement */ }
+                onClick = { /* TODO: Implement */ },
             )
         }
-        
+
         Spacer(modifier = Modifier.height(24.dp))
-        
+
         // About
         SettingsSection(title = "About") {
             SettingsClickableItem(
                 title = "Version",
                 description = "1.0.0",
-                onClick = { }
+                onClick = { },
             )
         }
     }
@@ -80,19 +94,19 @@ fun SettingsScreen() {
 @Composable
 private fun SettingsSection(
     title: String,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
             )
             content()
         }
@@ -104,31 +118,32 @@ private fun SettingsToggleItem(
     title: String,
     description: String,
     isChecked: Boolean,
-    onToggle: (Boolean) -> Unit
+    onToggle: (Boolean) -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Switch(
             checked = isChecked,
-            onCheckedChange = onToggle
+            onCheckedChange = onToggle,
         )
     }
 }
@@ -137,26 +152,26 @@ private fun SettingsToggleItem(
 private fun SettingsClickableItem(
     title: String,
     description: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     TextButton(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.Start,
         ) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
             )
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
             )
         }
     }

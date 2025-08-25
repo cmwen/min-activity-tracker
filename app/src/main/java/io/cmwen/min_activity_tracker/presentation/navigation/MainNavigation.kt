@@ -5,7 +5,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,29 +30,30 @@ import io.cmwen.min_activity_tracker.presentation.viewmodels.SessionsViewModel
 sealed class Screen(
     val route: String,
     val title: String,
-    val icon: ImageVector
+    val icon: ImageVector,
 ) {
     object Dashboard : Screen("dashboard", "Dashboard", Icons.Filled.Dashboard)
+
     object Sessions : Screen("sessions", "Sessions", Icons.Filled.Analytics)
+
     object Settings : Screen("settings", "Settings", Icons.Filled.Settings)
 }
 
 @Composable
-fun MainNavigation(
-    navController: NavHostController = rememberNavController()
-) {
+fun MainNavigation(navController: NavHostController = rememberNavController()) {
     Scaffold(
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
-                
-                val items = listOf(
-                    Screen.Dashboard,
-                    Screen.Sessions,
-                    Screen.Settings
-                )
-                
+
+                val items =
+                    listOf(
+                        Screen.Dashboard,
+                        Screen.Sessions,
+                        Screen.Settings,
+                    )
+
                 items.forEach { screen ->
                     NavigationBarItem(
                         icon = { Icon(screen.icon, contentDescription = screen.title) },
@@ -62,16 +67,16 @@ fun MainNavigation(
                                 launchSingleTop = true
                                 restoreState = true
                             }
-                        }
+                        },
                     )
                 }
             }
-        }
+        },
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screen.Dashboard.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         ) {
             composable(Screen.Dashboard.route) {
                 DashboardScreen()

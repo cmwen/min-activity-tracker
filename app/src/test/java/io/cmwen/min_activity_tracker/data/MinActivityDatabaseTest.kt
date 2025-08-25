@@ -12,7 +12,7 @@ class MinActivityDatabaseTest {
     fun migration_sql_constant_isCorrect() {
         assertEquals(
             "ALTER TABLE app_sessions ADD COLUMN notes TEXT",
-            DatabaseMigrations.MIGRATION_1_2_SQL
+            DatabaseMigrations.MIGRATION_1_2_SQL,
         )
     }
 

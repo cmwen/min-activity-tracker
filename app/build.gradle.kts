@@ -4,8 +4,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    id(libs.plugins.detekt.get().pluginId)
-    // ktlint temporarily disabled due to classpath version conflicts
+    id(
+        libs.plugins.detekt
+            .get()
+            .pluginId,
+    )
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -27,7 +31,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -62,8 +66,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
-    // Room compiler removed temporarily to avoid kapt compatibility issues with Kotlin 2.0.21
-    // Hilt removed temporarily to avoid kapt/plugin incompatibilities with Kotlin 2.0
     // Navigation
     implementation(libs.androidx.navigation.compose)
     // Kotlinx Serialization (JSON)
@@ -85,5 +87,16 @@ detekt {
     buildUponDefaultConfig = true
 }
 
-// ktlint configuration temporarily disabled due to classpath version conflicts
-// This is a known issue that needs to be resolved in a future iteration
+ktlint {
+    version.set(libs.versions.ktlintCli.get())
+    verbose.set(true)
+    android.set(true)
+    outputToConsole.set(true)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+    }
+}
+
+hilt {
+    enableAggregatingTask = false
+}

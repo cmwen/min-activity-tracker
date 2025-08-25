@@ -9,5 +9,5 @@ data class BatterySampleEntity(
     val timestamp: Long,
     val levelPercent: Int,
     val chargingState: String,
-    val temperature: Float? = null
+    val temperature: Float? = null,
 )

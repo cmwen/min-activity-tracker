@@ -15,5 +15,5 @@ data class AppSessionEntity(
     val endBatteryPct: Int? = null,
     val locationLatitude: Double? = null,
     val locationLongitude: Double? = null,
-    val metadataJson: String? = null
+    val metadataJson: String? = null,
 )

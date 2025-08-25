@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface SessionRepository {
     fun observeSessions(): Flow<List<AppSessionEntity>>
+
     suspend fun insert(session: AppSessionEntity)
+
     suspend fun deleteById(id: String)
 }
