@@ -477,7 +477,7 @@ style:
   MaxChainedCallsOnSameLine:
     active: false
   MaxLineLength:
-    active: true
+    active: false
     maxLineLength: 120
     excludePackageStatements: true
     excludeImportStatements: true

@@ -11,16 +11,16 @@ import kotlinx.coroutines.flow.asStateFlow
 class ErrorHandler {
     private val _currentError = MutableStateFlow<AppError?>(null)
     val currentError: StateFlow<AppError?> = _currentError.asStateFlow()
-    
+
     private val _errorHistory = MutableStateFlow<List<AppError>>(emptyList())
     val errorHistory: StateFlow<List<AppError>> = _errorHistory.asStateFlow()
-    
+
     /**
      * Handle a new error
      */
     fun handleError(error: AppError) {
         _currentError.value = error
-        
+
         // Add to history (keep last 10 errors)
         val currentHistory = _errorHistory.value.toMutableList()
         currentHistory.add(0, error)
@@ -29,26 +29,27 @@ class ErrorHandler {
         }
         _errorHistory.value = currentHistory
     }
-    
+
     /**
      * Handle throwable and convert to AppError
      */
     fun handleThrowable(throwable: Throwable) {
-        val error = when (throwable) {
-            is AppError -> throwable
-            is SecurityException -> AppError.PermissionError.UsageStatsNotGranted
-            else -> AppError.UnknownError(throwable.message ?: "Unknown error", throwable)
-        }
+        val error =
+            when (throwable) {
+                is AppError -> throwable
+                is SecurityException -> AppError.PermissionError.UsageStatsNotGranted
+                else -> AppError.UnknownError(throwable.message ?: "Unknown error", throwable)
+            }
         handleError(error)
     }
-    
+
     /**
      * Clear current error
      */
     fun clearCurrentError() {
         _currentError.value = null
     }
-    
+
     /**
      * Clear all errors
      */
@@ -56,17 +57,16 @@ class ErrorHandler {
         _currentError.value = null
         _errorHistory.value = emptyList()
     }
-    
+
     companion object {
-    private const val MAX_ERROR_HISTORY = 10
+        private const val MAX_ERROR_HISTORY = 10
 
         @Volatile
-        private var INSTANCE: ErrorHandler? = null
-        
-        fun getInstance(): ErrorHandler {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: ErrorHandler().also { INSTANCE = it }
+        private var instance: ErrorHandler? = null
+
+        fun getInstance(): ErrorHandler =
+            instance ?: synchronized(this) {
+                instance ?: ErrorHandler().also { instance = it }
             }
-        }
     }
 }

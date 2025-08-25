@@ -7,9 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
+import io.cmwen.min_activity_tracker.data.database.AppSessionEntity
 import io.cmwen.min_activity_tracker.presentation.navigation.MainNavigation
 import io.cmwen.min_activity_tracker.presentation.ui.SessionRow
-import io.cmwen.min_activity_tracker.data.database.AppSessionEntity
 import io.cmwen.min_activity_tracker.ui.theme.MinactivitytrackerTheme
 
 @AndroidEntryPoint
@@ -38,8 +38,8 @@ fun mainPreview() {
                 appLabel = "Preview App",
                 startTimestamp = 0L,
                 endTimestamp = 1L,
-                durationMs = 1L
-            )
+                durationMs = 1L,
+            ),
         )
     }
 }

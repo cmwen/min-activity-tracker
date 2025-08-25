@@ -4,6 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     // Static quality plugins (apply false here; applied in module)
-    id("io.gitlab.arturbosch.detekt") version "1.23.0" apply false
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.0" apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.ktlint) apply false
 }

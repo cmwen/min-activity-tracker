@@ -10,5 +10,5 @@ data class AnalysisReportEntity(
     val rangeEndTs: Long,
     val createdTs: Long,
     val reportType: String,
-    val metricsJson: String
+    val metricsJson: String,
 )

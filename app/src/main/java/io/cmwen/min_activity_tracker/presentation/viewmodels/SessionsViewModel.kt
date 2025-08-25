@@ -12,14 +12,18 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class SessionsViewModel @Inject constructor(
-    private val repo: SessionRepository
-) : ViewModel() {
+class SessionsViewModel
+    @Inject
+    constructor(
+        private val repo: SessionRepository,
+    ) : ViewModel() {
+        val sessions: StateFlow<List<AppSessionEntity>> =
+            repo
+                .observeSessions()
+                .map { it }
+                .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    val sessions: StateFlow<List<AppSessionEntity>> = repo.observeSessions()
-        .map { it }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        suspend fun add(session: AppSessionEntity) = repo.insert(session)
 
-    suspend fun add(session: AppSessionEntity) = repo.insert(session)
-    suspend fun remove(id: String) = repo.deleteById(id)
-}
+        suspend fun remove(id: String) = repo.deleteById(id)
+    }

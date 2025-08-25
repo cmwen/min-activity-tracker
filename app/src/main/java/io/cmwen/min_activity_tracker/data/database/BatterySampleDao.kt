@@ -12,7 +12,10 @@ interface BatterySampleDao {
     fun getAllSamples(): Flow<List<BatterySampleEntity>>
 
     @Query("SELECT * FROM battery_samples WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp DESC")
-    fun getSamplesByTimeRange(startTime: Long, endTime: Long): Flow<List<BatterySampleEntity>>
+    fun getSamplesByTimeRange(
+        startTime: Long,
+        endTime: Long,
+    ): Flow<List<BatterySampleEntity>>
 
     @Query("SELECT * FROM battery_samples WHERE chargingState = :chargingState ORDER BY timestamp DESC")
     fun getSamplesByChargingState(chargingState: String): Flow<List<BatterySampleEntity>>
@@ -33,5 +36,8 @@ interface BatterySampleDao {
     suspend fun deleteOldSamples(beforeTimestamp: Long)
 
     @Query("SELECT AVG(levelPercent) FROM battery_samples WHERE timestamp BETWEEN :startTime AND :endTime")
-    suspend fun getAverageBatteryLevel(startTime: Long, endTime: Long): Double?
+    suspend fun getAverageBatteryLevel(
+        startTime: Long,
+        endTime: Long,
+    ): Double?
 }
