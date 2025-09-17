@@ -8,5 +8,7 @@ interface SessionRepository {
 
     suspend fun insert(session: AppSessionEntity)
 
+    suspend fun insertAll(sessions: List<AppSessionEntity>)
+
     suspend fun deleteById(id: String)
 }

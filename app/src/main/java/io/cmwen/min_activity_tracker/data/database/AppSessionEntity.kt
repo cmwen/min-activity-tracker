@@ -11,4 +11,5 @@ data class AppSessionEntity(
     val startTimestamp: Long,
     val endTimestamp: Long,
     val durationMs: Long,
+    val notes: String? = null
 )

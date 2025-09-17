@@ -87,6 +87,8 @@ class SessionsViewModelTest {
 
             override suspend fun insert(session: AppSessionEntity) = Unit
 
+            override suspend fun insertAll(sessions: List<AppSessionEntity>) = Unit
+
             override suspend fun deleteById(id: String) = Unit
         }
 }
