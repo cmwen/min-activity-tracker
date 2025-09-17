@@ -11,5 +11,7 @@ class SessionRepositoryImpl(
 
     override suspend fun insert(session: AppSessionEntity) = dao.insert(session)
 
+    override suspend fun insertAll(sessions: List<AppSessionEntity>) = dao.insertAll(sessions)
+
     override suspend fun deleteById(id: String) = dao.deleteById(id)
 }

@@ -3,6 +3,7 @@ package io.cmwen.min_activity_tracker.presentation.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
@@ -25,7 +26,9 @@ import androidx.navigation.compose.rememberNavController
 import io.cmwen.min_activity_tracker.presentation.ui.DashboardScreen
 import io.cmwen.min_activity_tracker.presentation.ui.SessionsScreen
 import io.cmwen.min_activity_tracker.presentation.ui.SettingsScreen
+import io.cmwen.min_activity_tracker.presentation.ui.SummariesScreen
 import io.cmwen.min_activity_tracker.presentation.viewmodels.SessionsViewModel
+import io.cmwen.min_activity_tracker.presentation.viewmodels.SummariesViewModel
 
 sealed class Screen(
     val route: String,
@@ -33,9 +36,8 @@ sealed class Screen(
     val icon: ImageVector,
 ) {
     object Dashboard : Screen("dashboard", "Dashboard", Icons.Filled.Dashboard)
-
     object Sessions : Screen("sessions", "Sessions", Icons.Filled.Analytics)
-
+    object Summaries : Screen("summaries", "Summaries", Icons.Filled.BarChart)
     object Settings : Screen("settings", "Settings", Icons.Filled.Settings)
 }
 
@@ -51,6 +53,7 @@ fun MainNavigation(navController: NavHostController = rememberNavController()) {
                     listOf(
                         Screen.Dashboard,
                         Screen.Sessions,
+                        Screen.Summaries,
                         Screen.Settings,
                     )
 
@@ -84,6 +87,10 @@ fun MainNavigation(navController: NavHostController = rememberNavController()) {
             composable(Screen.Sessions.route) {
                 val viewModel: SessionsViewModel = hiltViewModel()
                 SessionsScreen(viewModel = viewModel)
+            }
+            composable(Screen.Summaries.route) {
+                val viewModel: SummariesViewModel = hiltViewModel()
+                SummariesScreen(viewModel = viewModel)
             }
             composable(Screen.Settings.route) {
                 SettingsScreen()
