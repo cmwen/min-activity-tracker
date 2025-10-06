@@ -10,12 +10,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.cmwen.min_activity_tracker.data.database.AppSessionEntity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import android.content.Intent
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import io.cmwen.min_activity_tracker.features.permissions.PermissionManager
+import io.cmwen.min_activity_tracker.features.permissions.PermissionChecker
 import io.cmwen.min_activity_tracker.features.permissions.PermissionsScreen
+import io.cmwen.min_activity_tracker.features.workers.WorkScheduler
 import io.cmwen.min_activity_tracker.presentation.navigation.MainNavigation
 import io.cmwen.min_activity_tracker.presentation.ui.SessionRow
 import io.cmwen.min_activity_tracker.ui.theme.MinactivitytrackerTheme
@@ -25,7 +25,10 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var permissionManager: PermissionManager
+    lateinit var permissionChecker: PermissionChecker
+    
+    @Inject
+    lateinit var workScheduler: WorkScheduler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +36,45 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MinactivitytrackerTheme {
-                var hasPermissions by remember { mutableStateOf(permissionManager.hasAllPermissions()) }
+                var hasPermissions by remember { 
+                    mutableStateOf(permissionChecker.hasAllRequiredPermissions()) 
+                }
+
+                LaunchedEffect(hasPermissions) {
+                    if (hasPermissions) {
+                        // Initialize background data collection
+                        workScheduler.scheduleDataCollection()
+                        workScheduler.scheduleDailyAnalysis()
+                        workScheduler.scheduleWeeklyAnalysis()
+                    }
+                }
 
                 if (hasPermissions) {
-                    LaunchedEffect(Unit) {
-                        startService(Intent(this@MainActivity, io.cmwen.min_activity_tracker.features.tracking.TrackingService::class.java))
-                    }
                     MainNavigation()
                 } else {
-                    PermissionsScreen(onPermissionsGranted = { hasPermissions = true })
+                    PermissionsScreen(
+                        onNavigateBack = { finish() }
+                    )
+                }
+            }
+        }
+    }
+    
+    override fun onResume() {
+        super.onResume()
+        // Recheck permissions when app resumes (user may have changed them in settings)
+        setContent {
+            MinactivitytrackerTheme {
+                val hasPermissions = remember { 
+                    mutableStateOf(permissionChecker.hasAllRequiredPermissions()) 
+                }.value
+                
+                if (hasPermissions) {
+                    MainNavigation()
+                } else {
+                    PermissionsScreen(
+                        onNavigateBack = { finish() }
+                    )
                 }
             }
         }
