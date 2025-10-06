@@ -16,6 +16,9 @@ class DeviceEventRepositoryImpl(
         endTime: Long,
     ): Flow<List<DeviceEventEntity>> = dao.getEventsByTimeRange(startTime, endTime)
 
+    override suspend fun getEventsInRange(startTime: Long, endTime: Long): List<DeviceEventEntity> = 
+        dao.getEventsInRange(startTime, endTime)
+
     override suspend fun insert(event: DeviceEventEntity) = dao.insert(event)
 
     override suspend fun insertAll(events: List<DeviceEventEntity>) = dao.insertAll(events)

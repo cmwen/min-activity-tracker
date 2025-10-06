@@ -11,5 +11,9 @@ data class AppSessionEntity(
     val startTimestamp: Long,
     val endTimestamp: Long,
     val durationMs: Long,
-    val notes: String? = null
+    val startBatteryPct: Int? = null,
+    val endBatteryPct: Int? = null,
+    val locationLatitude: Double? = null,
+    val locationLongitude: Double? = null,
+    val metadataJson: String? = null
 )

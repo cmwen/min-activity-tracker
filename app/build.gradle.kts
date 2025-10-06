@@ -10,6 +10,7 @@ plugins {
             .pluginId,
     )
     alias(libs.plugins.ktlint)
+    id("jacoco")
 }
 
 android {
@@ -44,6 +45,13 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
     }
     packaging {
         resources.excludes.add("META-INF/LICENSE.md")
@@ -74,11 +82,24 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     // Kotlinx Serialization (JSON)
     implementation(libs.kotlinx.serialization.core)
+    // WorkManager
+    implementation(libs.androidx.work.runtime)
+    implementation(libs.hilt.work)
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+    // Location Services
+    implementation(libs.play.services.location)
+    // Permissions (Accompanist)
+    implementation(libs.accompanist.permissions)
+    
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.room.testing)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.work.testing)
     androidTestImplementation(libs.androidx.room.testing)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.androidx.junit)
@@ -110,4 +131,18 @@ ktlint {
 
 hilt {
     enableAggregatingTask = false
+}
+
+// Jacoco test coverage configuration
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+    
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    
+    sourceDirectories.setFrom(files("${project.projectDir}/src/main/java"))
+    classDirectories.setFrom(files("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug"))
+    executionData.setFrom(files("${layout.buildDirectory.get()}/jacoco/testDebugUnitTest.exec"))
 }

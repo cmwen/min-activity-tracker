@@ -15,6 +15,8 @@ interface BatterySampleRepository {
 
     fun observeRecentSamples(limit: Int): Flow<List<BatterySampleEntity>>
 
+    suspend fun getSamplesInRange(startTime: Long, endTime: Long): List<BatterySampleEntity>
+
     suspend fun insert(sample: BatterySampleEntity)
 
     suspend fun insertAll(samples: List<BatterySampleEntity>)

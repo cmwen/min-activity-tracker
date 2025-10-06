@@ -75,10 +75,16 @@ class SessionRepositoryImplTest {
         object : SessionDao {
             override fun getAllSessions() = flow { emit(emptyList<AppSessionEntity>()) }
 
+            override suspend fun getSessionsInRange(startTime: Long, endTime: Long) = emptyList<AppSessionEntity>()
+
+            override suspend fun getSessionById(id: String): AppSessionEntity? = null
+
             override suspend fun insert(session: AppSessionEntity) = Unit
 
             override suspend fun insertAll(sessions: List<AppSessionEntity>) = Unit
 
             override suspend fun deleteById(id: String) = Unit
+
+            override suspend fun deleteSessionsOlderThan(timestamp: Long) = Unit
         }
 }
