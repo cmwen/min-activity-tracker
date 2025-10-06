@@ -1,5 +1,6 @@
 package io.cmwen.min_activity_tracker.features.permissions
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PermissionViewModel @Inject constructor(
-    private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager,
+    private val permissionChecker: PermissionChecker
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PermissionUIState())
@@ -23,19 +25,36 @@ class PermissionViewModel @Inject constructor(
 
     fun checkPermissions() {
         viewModelScope.launch {
+            val status = permissionChecker.getPermissionStatus()
             _uiState.value = PermissionUIState(
-                hasUsageStats = permissionManager.isUsageStatsPermissionGranted(),
-                hasAllPermissions = permissionManager.hasAllPermissions()
+                hasUsageStats = status.usageAccess,
+                hasLocation = status.location,
+                hasBackgroundLocation = status.backgroundLocation,
+                hasActivityRecognition = status.activityRecognition,
+                hasNotifications = status.notifications,
+                hasAllRequired = status.allRequired,
+                hasAllOptional = status.allOptional
             )
         }
     }
 
-    fun createUsageStatsIntent() = permissionManager.createUsageStatsIntent()
+    fun createUsageStatsIntent(): Intent = permissionManager.createUsageStatsIntent()
 
-    fun createAppSettingsIntent() = permissionManager.createAppSettingsIntent()
+    fun createAppSettingsIntent(): Intent = permissionManager.createAppSettingsIntent()
+    
+    fun getRuntimePermissionsToRequest(): List<String> = 
+        permissionChecker.getRuntimePermissionsToRequest()
+    
+    fun getOptionalPermissionsToRequest(): List<String> = 
+        permissionChecker.getOptionalPermissionsToRequest()
 }
 
 data class PermissionUIState(
     val hasUsageStats: Boolean = false,
-    val hasAllPermissions: Boolean = false
+    val hasLocation: Boolean = false,
+    val hasBackgroundLocation: Boolean = false,
+    val hasActivityRecognition: Boolean = false,
+    val hasNotifications: Boolean = false,
+    val hasAllRequired: Boolean = false,
+    val hasAllOptional: Boolean = false
 )
