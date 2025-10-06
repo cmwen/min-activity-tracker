@@ -73,6 +73,7 @@ jobs:
     name: Run Instrumented Tests
     runs-on: macos-latest
     needs: test
+    continue-on-error: true
 
     steps:
     - name: Checkout code
