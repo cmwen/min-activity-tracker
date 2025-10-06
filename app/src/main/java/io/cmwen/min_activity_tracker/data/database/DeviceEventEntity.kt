@@ -8,4 +8,5 @@ data class DeviceEventEntity(
     @PrimaryKey val id: String,
     val type: String,
     val timestamp: Long,
+    val detailsJson: String? = null
 )
