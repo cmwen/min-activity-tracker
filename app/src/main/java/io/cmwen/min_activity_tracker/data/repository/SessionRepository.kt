@@ -8,7 +8,10 @@ interface SessionRepository {
 
     suspend fun getAllSessions(): List<AppSessionEntity>
 
-    suspend fun getSessionsInRange(startTime: Long, endTime: Long): List<AppSessionEntity>
+    suspend fun getSessionsInRange(
+        startTime: Long,
+        endTime: Long,
+    ): List<AppSessionEntity>
 
     suspend fun getSessionById(id: String): AppSessionEntity?
 

@@ -14,28 +14,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object TestAppModule {
+    @Provides
+    @Singleton
+    fun providePermissionManager(): PermissionManager = mockk(relaxed = true)
 
     @Provides
     @Singleton
-    fun providePermissionManager(): PermissionManager {
-        return mockk(relaxed = true)
-    }
+    fun provideSessionRepository(): SessionRepository = mockk(relaxed = true)
 
     @Provides
     @Singleton
-    fun provideSessionRepository(): SessionRepository {
-        return mockk(relaxed = true)
-    }
+    fun provideDeviceEventRepository(): DeviceEventRepository = mockk(relaxed = true)
 
     @Provides
     @Singleton
-    fun provideDeviceEventRepository(): DeviceEventRepository {
-        return mockk(relaxed = true)
-    }
-
-    @Provides
-    @Singleton
-    fun provideBatterySampleRepository(): BatterySampleRepository {
-        return mockk(relaxed = true)
-    }
+    fun provideBatterySampleRepository(): BatterySampleRepository = mockk(relaxed = true)
 }

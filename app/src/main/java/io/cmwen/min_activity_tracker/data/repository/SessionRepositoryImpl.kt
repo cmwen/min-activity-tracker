@@ -12,11 +12,12 @@ class SessionRepositoryImpl(
 
     override suspend fun getAllSessions(): List<AppSessionEntity> = dao.getAllSessions().first()
 
-    override suspend fun getSessionsInRange(startTime: Long, endTime: Long): List<AppSessionEntity> = 
-        dao.getSessionsInRange(startTime, endTime)
+    override suspend fun getSessionsInRange(
+        startTime: Long,
+        endTime: Long,
+    ): List<AppSessionEntity> = dao.getSessionsInRange(startTime, endTime)
 
-    override suspend fun getSessionById(id: String): AppSessionEntity? = 
-        dao.getSessionById(id)
+    override suspend fun getSessionById(id: String): AppSessionEntity? = dao.getSessionById(id)
 
     override suspend fun insert(session: AppSessionEntity) = dao.insert(session)
 
@@ -24,6 +25,5 @@ class SessionRepositoryImpl(
 
     override suspend fun deleteById(id: String) = dao.deleteById(id)
 
-    override suspend fun deleteSessionsOlderThan(timestamp: Long) = 
-        dao.deleteSessionsOlderThan(timestamp)
+    override suspend fun deleteSessionsOlderThan(timestamp: Long) = dao.deleteSessionsOlderThan(timestamp)
 }

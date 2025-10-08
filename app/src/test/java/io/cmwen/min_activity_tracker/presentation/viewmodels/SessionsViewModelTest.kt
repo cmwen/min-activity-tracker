@@ -87,7 +87,10 @@ class SessionsViewModelTest {
 
             override suspend fun getAllSessions() = emptyList<AppSessionEntity>()
 
-            override suspend fun getSessionsInRange(startTime: Long, endTime: Long) = emptyList<AppSessionEntity>()
+            override suspend fun getSessionsInRange(
+                startTime: Long,
+                endTime: Long,
+            ) = emptyList<AppSessionEntity>()
 
             override suspend fun getSessionById(id: String): AppSessionEntity? = null
 

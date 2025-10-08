@@ -89,9 +89,10 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     // Location Services
     implementation(libs.play.services.location)
+    implementation(libs.kotlinx.coroutines.play.services)
     // Permissions (Accompanist)
     implementation(libs.accompanist.permissions)
-    
+
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.room.testing)
@@ -136,12 +137,12 @@ hilt {
 // Jacoco test coverage configuration
 tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("testDebugUnitTest")
-    
+
     reports {
         xml.required.set(true)
         html.required.set(true)
     }
-    
+
     sourceDirectories.setFrom(files("${project.projectDir}/src/main/java"))
     classDirectories.setFrom(files("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug"))
     executionData.setFrom(files("${layout.buildDirectory.get()}/jacoco/testDebugUnitTest.exec"))

@@ -12,7 +12,10 @@ interface SessionDao {
     fun getAllSessions(): Flow<List<AppSessionEntity>>
 
     @Query("SELECT * FROM app_sessions WHERE startTimestamp >= :startTime AND endTimestamp <= :endTime ORDER BY startTimestamp DESC")
-    suspend fun getSessionsInRange(startTime: Long, endTime: Long): List<AppSessionEntity>
+    suspend fun getSessionsInRange(
+        startTime: Long,
+        endTime: Long,
+    ): List<AppSessionEntity>
 
     @Query("SELECT * FROM app_sessions WHERE id = :id")
     suspend fun getSessionById(id: String): AppSessionEntity?

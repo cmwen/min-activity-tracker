@@ -25,34 +25,36 @@ fun PieChart(
         floatValue.add(index, 360 * values / totalSum)
     }
 
-    val colors = listOf(
-        Color(0xFFF44336),
-        Color(0xFFE91E63),
-        Color(0xFF9C27B0),
-        Color(0xFF673AB7),
-        Color(0xFF3F51B5),
-        Color(0xFF2196F3),
-        Color(0xFF00BCD4),
-        Color(0xFF009688),
-        Color(0xFF4CAF50),
-        Color(0xFF8BC34A),
-        Color(0xFFCDDC39),
-        Color(0xFFFFEB3B),
-        Color(0xFFFFC107),
-        Color(0xFFFF9800),
-        Color(0xFFFF5722),
-        Color(0xFF795548),
-        Color(0xFF9E9E9E),
-        Color(0xFF607D8B)
-    )
+    val colors =
+        listOf(
+            Color(0xFFF44336),
+            Color(0xFFE91E63),
+            Color(0xFF9C27B0),
+            Color(0xFF673AB7),
+            Color(0xFF3F51B5),
+            Color(0xFF2196F3),
+            Color(0xFF00BCD4),
+            Color(0xFF009688),
+            Color(0xFF4CAF50),
+            Color(0xFF8BC34A),
+            Color(0xFFCDDC39),
+            Color(0xFFFFEB3B),
+            Color(0xFFFFC107),
+            Color(0xFFFF9800),
+            Color(0xFFFF5722),
+            Color(0xFF795548),
+            Color(0xFF9E9E9E),
+            Color(0xFF607D8B),
+        )
 
     Box(
         modifier = Modifier.size(radiusOuter * 2f),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Canvas(
-            modifier = Modifier
-                .size(radiusOuter * 2f)
+            modifier =
+                Modifier
+                    .size(radiusOuter * 2f),
         ) {
             var lastAngle = 0f
             val strokeWidth = chartBarWidth.toPx()
@@ -65,7 +67,7 @@ fun PieChart(
                     startAngle = lastAngle,
                     sweepAngle = value,
                     useCenter = false,
-                    style = Stroke(width = strokeWidth)
+                    style = Stroke(width = strokeWidth),
                 )
                 lastAngle += value
             }

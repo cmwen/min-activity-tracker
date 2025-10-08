@@ -20,7 +20,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TrackingService : Service() {
-
     @Inject
     lateinit var dataCollector: DataCollector
 
@@ -32,7 +31,11 @@ class TrackingService : Service() {
         const val NOTIFICATION_ID = 1
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
         createNotificationChannel()
         val notification = createNotification()
         startForeground(NOTIFICATION_ID, notification)
@@ -53,27 +56,26 @@ class TrackingService : Service() {
         job.cancel()
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val serviceChannel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,
-                "Tracking Service Channel",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
+            val serviceChannel =
+                NotificationChannel(
+                    NOTIFICATION_CHANNEL_ID,
+                    "Tracking Service Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT,
+                )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(serviceChannel)
         }
     }
 
-    private fun createNotification(): Notification {
-        return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+    private fun createNotification(): Notification =
+        NotificationCompat
+            .Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentTitle("Activity Tracker")
             .setContentText("Tracking your activity...")
             .setSmallIcon(R.mipmap.ic_launcher)
             .build()
-    }
 }

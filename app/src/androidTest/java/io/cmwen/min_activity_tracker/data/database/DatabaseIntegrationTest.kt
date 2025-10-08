@@ -16,7 +16,6 @@ import java.util.UUID
  */
 @RunWith(AndroidJUnit4::class)
 class DatabaseIntegrationTest {
-
     @Test
     fun writeAndReadSession() =
         runTest {

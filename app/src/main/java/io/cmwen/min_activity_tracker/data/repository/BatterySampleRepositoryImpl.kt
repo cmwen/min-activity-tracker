@@ -18,8 +18,10 @@ class BatterySampleRepositoryImpl(
 
     override fun observeRecentSamples(limit: Int): Flow<List<BatterySampleEntity>> = dao.getRecentSamples(limit)
 
-    override suspend fun getSamplesInRange(startTime: Long, endTime: Long): List<BatterySampleEntity> = 
-        dao.getSamplesInRange(startTime, endTime)
+    override suspend fun getSamplesInRange(
+        startTime: Long,
+        endTime: Long,
+    ): List<BatterySampleEntity> = dao.getSamplesInRange(startTime, endTime)
 
     override suspend fun insert(sample: BatterySampleEntity) = dao.insert(sample)
 

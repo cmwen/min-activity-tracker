@@ -13,7 +13,10 @@ interface DeviceEventRepository {
         endTime: Long,
     ): Flow<List<DeviceEventEntity>>
 
-    suspend fun getEventsInRange(startTime: Long, endTime: Long): List<DeviceEventEntity>
+    suspend fun getEventsInRange(
+        startTime: Long,
+        endTime: Long,
+    ): List<DeviceEventEntity>
 
     suspend fun insert(event: DeviceEventEntity)
 

@@ -1,6 +1,12 @@
 package io.cmwen.min_activity_tracker.presentation.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -19,27 +25,28 @@ fun SummariesScreen(viewModel: SummariesViewModel = hiltViewModel()) {
     val summaries by viewModel.summaries.collectAsState()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "App Usage Summaries",
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp),
         )
 
         if (summaries.isNotEmpty()) {
             PieChart(
-                data = summaries.mapValues<String, Long, Float> { it.value.toFloat() }
+                data = summaries.mapValues<String, Long, Float> { it.value.toFloat() },
             )
             Spacer(modifier = Modifier.height(32.dp))
         }
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(summaries.entries.toList()) { entry ->
                 Text("${entry.key}: ${formatDuration(entry.value)}")

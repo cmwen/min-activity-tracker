@@ -11,15 +11,17 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class SummariesViewModel @Inject constructor(
-    private val sessionRepository: SessionRepository
-) : ViewModel() {
-
-    val summaries: StateFlow<Map<String, Long>> =
-        sessionRepository.observeSessions()
-            .map { sessions ->
-                sessions.groupBy { it.packageName }
-                    .mapValues { (_, sessions) -> sessions.sumOf { it.durationMs } }
-            }
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
-}
+class SummariesViewModel
+    @Inject
+    constructor(
+        private val sessionRepository: SessionRepository,
+    ) : ViewModel() {
+        val summaries: StateFlow<Map<String, Long>> =
+            sessionRepository
+                .observeSessions()
+                .map { sessions ->
+                    sessions
+                        .groupBy { it.packageName }
+                        .mapValues { (_, sessions) -> sessions.sumOf { it.durationMs } }
+                }.stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
+    }

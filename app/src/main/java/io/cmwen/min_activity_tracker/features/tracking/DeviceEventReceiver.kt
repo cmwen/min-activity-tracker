@@ -12,18 +12,21 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeviceEventReceiver : BroadcastReceiver() {
-
     @Inject
     lateinit var deviceEventRepository: DeviceEventRepository
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         val action = intent.action ?: return
         val timestamp = System.currentTimeMillis()
-        val event = io.cmwen.min_activity_tracker.data.database.DeviceEventEntity(
-            id = "device-${action}-${timestamp}",
-            type = action,
-            timestamp = timestamp
-        )
+        val event =
+            io.cmwen.min_activity_tracker.data.database.DeviceEventEntity(
+                id = "device-$action-$timestamp",
+                type = action,
+                timestamp = timestamp,
+            )
 
         CoroutineScope(Dispatchers.IO).launch {
             deviceEventRepository.insert(event)

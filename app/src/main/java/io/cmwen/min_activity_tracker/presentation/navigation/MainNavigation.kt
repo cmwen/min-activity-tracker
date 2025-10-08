@@ -36,8 +36,11 @@ sealed class Screen(
     val icon: ImageVector,
 ) {
     object Dashboard : Screen("dashboard", "Dashboard", Icons.Filled.Dashboard)
+
     object Sessions : Screen("sessions", "Sessions", Icons.Filled.Analytics)
+
     object Summaries : Screen("summaries", "Summaries", Icons.Filled.BarChart)
+
     object Settings : Screen("settings", "Settings", Icons.Filled.Settings)
 }
 

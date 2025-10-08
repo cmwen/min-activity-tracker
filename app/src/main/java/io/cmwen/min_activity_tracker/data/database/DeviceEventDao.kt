@@ -21,7 +21,10 @@ interface DeviceEventDao {
     ): Flow<List<DeviceEventEntity>>
 
     @Query("SELECT * FROM device_events WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp DESC")
-    suspend fun getEventsInRange(startTime: Long, endTime: Long): List<DeviceEventEntity>
+    suspend fun getEventsInRange(
+        startTime: Long,
+        endTime: Long,
+    ): List<DeviceEventEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(event: DeviceEventEntity)

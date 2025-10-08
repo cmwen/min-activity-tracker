@@ -20,7 +20,6 @@ import javax.inject.Inject
 @UninstallModules(AppModule::class)
 @HiltAndroidTest
 class PermissionFlowTest {
-
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 

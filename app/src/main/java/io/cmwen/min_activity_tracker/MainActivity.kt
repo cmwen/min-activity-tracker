@@ -5,14 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 import io.cmwen.min_activity_tracker.data.database.AppSessionEntity
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import io.cmwen.min_activity_tracker.features.permissions.PermissionChecker
 import io.cmwen.min_activity_tracker.features.permissions.PermissionsScreen
 import io.cmwen.min_activity_tracker.features.workers.WorkScheduler
@@ -23,10 +23,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var permissionChecker: PermissionChecker
-    
+
     @Inject
     lateinit var workScheduler: WorkScheduler
 
@@ -36,8 +35,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MinactivitytrackerTheme {
-                var hasPermissions by remember { 
-                    mutableStateOf(permissionChecker.hasAllRequiredPermissions()) 
+                var hasPermissions by remember {
+                    mutableStateOf(permissionChecker.hasAllRequiredPermissions())
                 }
 
                 LaunchedEffect(hasPermissions) {
@@ -53,27 +52,32 @@ class MainActivity : ComponentActivity() {
                     MainNavigation()
                 } else {
                     PermissionsScreen(
-                        onNavigateBack = { finish() }
+                        onPermissionsGranted = {
+                            hasPermissions = true
+                        },
                     )
                 }
             }
         }
     }
-    
+
     override fun onResume() {
         super.onResume()
         // Recheck permissions when app resumes (user may have changed them in settings)
         setContent {
             MinactivitytrackerTheme {
-                val hasPermissions = remember { 
-                    mutableStateOf(permissionChecker.hasAllRequiredPermissions()) 
-                }.value
-                
+                var hasPermissions by
+                    remember {
+                        mutableStateOf(permissionChecker.hasAllRequiredPermissions())
+                    }
+
                 if (hasPermissions) {
                     MainNavigation()
                 } else {
                     PermissionsScreen(
-                        onNavigateBack = { finish() }
+                        onPermissionsGranted = {
+                            hasPermissions = true
+                        },
                     )
                 }
             }

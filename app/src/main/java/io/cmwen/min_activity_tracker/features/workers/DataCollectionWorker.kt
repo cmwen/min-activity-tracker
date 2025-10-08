@@ -15,36 +15,38 @@ import kotlinx.coroutines.withContext
  * Runs in background to collect app usage, battery samples, and device events
  */
 @HiltWorker
-class DataCollectionWorker @AssistedInject constructor(
-    @Assisted appContext: Context,
-    @Assisted workerParams: WorkerParameters,
-    private val dataCollector: DataCollector
-) : CoroutineWorker(appContext, workerParams) {
+class DataCollectionWorker
+    @AssistedInject
+    constructor(
+        @Assisted appContext: Context,
+        @Assisted workerParams: WorkerParameters,
+        private val dataCollector: DataCollector,
+    ) : CoroutineWorker(appContext, workerParams) {
+        override suspend fun doWork(): Result =
+            withContext(Dispatchers.IO) {
+                try {
+                    val currentTime = System.currentTimeMillis()
+                    val lastHour = currentTime - (60 * 60 * 1000L) // Last hour
 
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        try {
-            val currentTime = System.currentTimeMillis()
-            val lastHour = currentTime - (60 * 60 * 1000L) // Last hour
-            
-            // Collect app usage data from last hour
-            dataCollector.collectUsageData(lastHour, currentTime)
-            
-            // Collect current battery sample
-            dataCollector.collectBatteryData()
-            
-            Result.success()
-        } catch (e: Exception) {
-            // Retry on failure, with exponential backoff
-            if (runAttemptCount < MAX_RETRIES) {
-                Result.retry()
-            } else {
-                Result.failure()
+                    // Collect app usage data from last hour
+                    dataCollector.collectUsageData(lastHour, currentTime)
+
+                    // Collect current battery sample
+                    dataCollector.collectBatteryData()
+
+                    Result.success()
+                } catch (e: Exception) {
+                    // Retry on failure, with exponential backoff
+                    if (runAttemptCount < MAX_RETRIES) {
+                        Result.retry()
+                    } else {
+                        Result.failure()
+                    }
+                }
             }
+
+        companion object {
+            private const val MAX_RETRIES = 3
+            const val WORK_NAME = "data_collection_work"
         }
     }
-
-    companion object {
-        private const val MAX_RETRIES = 3
-        const val WORK_NAME = "data_collection_work"
-    }
-}

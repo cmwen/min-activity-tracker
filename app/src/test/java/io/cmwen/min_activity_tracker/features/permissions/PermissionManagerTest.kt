@@ -13,7 +13,6 @@ import org.junit.Before
 import org.junit.Test
 
 class PermissionManagerTest {
-
     private lateinit var context: Context
     private lateinit var appOpsManager: AppOpsManager
     private lateinit var permissionManager: PermissionManager
@@ -33,7 +32,7 @@ class PermissionManagerTest {
             appOpsManager.checkOpNoThrow(
                 AppOpsManager.OPSTR_GET_USAGE_STATS,
                 0,
-                ""
+                "",
             )
         } returns AppOpsManager.MODE_ALLOWED
 
@@ -46,7 +45,7 @@ class PermissionManagerTest {
             appOpsManager.checkOpNoThrow(
                 AppOpsManager.OPSTR_GET_USAGE_STATS,
                 0,
-                ""
+                "",
             )
         } returns AppOpsManager.MODE_ERRORED
 
@@ -64,7 +63,7 @@ class PermissionManagerTest {
             appOpsManager.checkOpNoThrow(
                 AppOpsManager.OPSTR_GET_USAGE_STATS,
                 0,
-                ""
+                "",
             )
         } returns AppOpsManager.MODE_ALLOWED
 
@@ -80,7 +79,7 @@ class PermissionManagerTest {
             appOpsManager.checkOpNoThrow(
                 AppOpsManager.OPSTR_GET_USAGE_STATS,
                 0,
-                ""
+                "",
             )
         } returns AppOpsManager.MODE_ALLOWED
 

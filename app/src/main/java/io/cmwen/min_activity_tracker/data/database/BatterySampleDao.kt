@@ -24,7 +24,10 @@ interface BatterySampleDao {
     fun getRecentSamples(limit: Int): Flow<List<BatterySampleEntity>>
 
     @Query("SELECT * FROM battery_samples WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp DESC")
-    suspend fun getSamplesInRange(startTime: Long, endTime: Long): List<BatterySampleEntity>
+    suspend fun getSamplesInRange(
+        startTime: Long,
+        endTime: Long,
+    ): List<BatterySampleEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(sample: BatterySampleEntity)
