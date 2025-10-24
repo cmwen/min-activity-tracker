@@ -7,6 +7,8 @@ import io.cmwen.min_activity_tracker.data.preferences.UserPreferences
 import io.cmwen.min_activity_tracker.data.preferences.UserPreferencesRepository
 import io.cmwen.min_activity_tracker.data.repository.SessionRepository
 import io.cmwen.min_activity_tracker.features.export.DataExporter
+import io.cmwen.min_activity_tracker.features.export.ExportFormat
+import io.cmwen.min_activity_tracker.features.export.ExportTimeRange
 import io.cmwen.min_activity_tracker.features.workers.WorkScheduler
 import java.io.File
 import javax.inject.Inject
@@ -80,6 +82,33 @@ class SettingsViewModel
             }
         }
 
+        fun onAutoExportEnabledChanged(enabled: Boolean) {
+            viewModelScope.launch {
+                userPreferencesRepository.setAutoExportEnabled(enabled)
+                updateAutoExportSchedule()
+            }
+        }
+
+        fun onAutoExportFormatChanged(format: ExportFormat) {
+            viewModelScope.launch {
+                userPreferencesRepository.setAutoExportFormat(format)
+                updateAutoExportSchedule()
+            }
+        }
+
+        fun onAutoExportRangeChanged(range: ExportTimeRange) {
+            viewModelScope.launch {
+                userPreferencesRepository.setAutoExportRange(range)
+                updateAutoExportSchedule()
+            }
+        }
+
+        fun onAutoExportAnonymizeChanged(enabled: Boolean) {
+            viewModelScope.launch {
+                userPreferencesRepository.setAutoExportAnonymize(enabled)
+            }
+        }
+
         fun clearSavedLocationData() {
             viewModelScope.launch {
                 sessionRepository.clearLocationData()
@@ -128,6 +157,15 @@ class SettingsViewModel
             }
         }
 
+        private suspend fun updateAutoExportSchedule() {
+            val prefs = userPreferencesRepository.preferencesFlow.first()
+            if (prefs.autoExportEnabled) {
+                workScheduler.scheduleAutoExport()
+            } else {
+                workScheduler.cancelAutoExportWork()
+            }
+        }
+
         companion object {
             private const val ONE_DAY_MS = 24 * 60 * 60 * 1000L
         }
@@ -143,14 +181,4 @@ sealed interface ExportState {
     data object InProgress : ExportState
     data class Success(val file: File) : ExportState
     data class Error(val throwable: Throwable) : ExportState
-}
-
-enum class ExportFormat {
-    JSON,
-    CSV,
-}
-
-enum class ExportTimeRange {
-    ALL,
-    LAST_24_HOURS,
 }

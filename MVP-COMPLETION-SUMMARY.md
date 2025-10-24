@@ -113,11 +113,11 @@ Background Services (WorkManager, Foreground Service)
 ## 🚀 What's Next (Post-MVP)
 
 ### Immediate Priorities
-1. **Export Scheduling**: Automate recurring exports and surface status in-app.
-2. **Analytics Surfacing**: Display generated reports/insights within Dashboard and Summaries screens.
-3. **Battery Correlation & Pattern Detection**: Extend analysis pipeline with richer insights.
-4. **Advanced UI Controls**: Implement filtering/search and resilient loading/empty states.
-5. **Device Validation**: Expand manual + instrumentation testing across API 24–34 devices.
+1. **Analytics Surfacing**: Display generated reports/insights within Dashboard and Summaries screens.
+2. **Battery Correlation & Pattern Detection**: Extend analysis pipeline with richer insights.
+3. **Advanced UI Controls**: Implement filtering/search and resilient loading/empty states.
+4. **Device Validation**: Expand manual + instrumentation testing across API 24–34 devices.
+5. **Auto Export Visibility**: Provide user-facing history and failure notifications for scheduled exports.
 
 ### Short-term Goals
 1. **Performance Optimization**: Verify <5% daily battery impact from background services.

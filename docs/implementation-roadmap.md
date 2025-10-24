@@ -104,7 +104,7 @@ Detekt & formatting status (developer notes):
    - [x] Create JSON export functionality
    - [x] Implement CSV export with customization
    - [ ] Add SQLite database export
-   - [ ] Create export scheduling options
+   - [x] Create export scheduling options (daily WorkManager job with user controls)
    - [x] Implement in-app export UI with anonymization controls
    - [x] Add data anonymization features
 

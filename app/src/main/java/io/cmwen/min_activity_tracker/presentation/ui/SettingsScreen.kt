@@ -35,9 +35,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.cmwen.min_activity_tracker.data.preferences.UserPreferences
-import io.cmwen.min_activity_tracker.presentation.viewmodels.ExportFormat
+import io.cmwen.min_activity_tracker.features.export.ExportFormat
+import io.cmwen.min_activity_tracker.features.export.ExportTimeRange
 import io.cmwen.min_activity_tracker.presentation.viewmodels.ExportState
-import io.cmwen.min_activity_tracker.presentation.viewmodels.ExportTimeRange
 import io.cmwen.min_activity_tracker.presentation.viewmodels.SettingsUiState
 import io.cmwen.min_activity_tracker.presentation.viewmodels.SettingsViewModel
 import io.cmwen.min_activity_tracker.ui.theme.MinactivitytrackerTheme
@@ -72,6 +72,10 @@ fun SettingsScreen(
         onActivityRecognitionToggled = viewModel::onActivityRecognitionChanged,
         onAnonymizeLocationToggled = viewModel::onAnonymizeLocationChanged,
         onClearLocationData = viewModel::clearSavedLocationData,
+        onAutoExportEnabledChanged = viewModel::onAutoExportEnabledChanged,
+        onAutoExportFormatChanged = viewModel::onAutoExportFormatChanged,
+        onAutoExportRangeChanged = viewModel::onAutoExportRangeChanged,
+        onAutoExportAnonymizeChanged = viewModel::onAutoExportAnonymizeChanged,
     )
 }
 
@@ -89,8 +93,14 @@ private fun SettingsContent(
     onActivityRecognitionToggled: (Boolean) -> Unit,
     onAnonymizeLocationToggled: (Boolean) -> Unit,
     onClearLocationData: () -> Unit,
+    onAutoExportEnabledChanged: (Boolean) -> Unit,
+    onAutoExportFormatChanged: (ExportFormat) -> Unit,
+    onAutoExportRangeChanged: (ExportTimeRange) -> Unit,
+    onAutoExportAnonymizeChanged: (Boolean) -> Unit,
 ) {
     val prefs = uiState.preferences
+    var showAutoFormatPicker by remember { mutableStateOf(false) }
+    var showAutoRangePicker by remember { mutableStateOf(false) }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -163,6 +173,38 @@ private fun SettingsContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            SettingsSection(title = "Automated Exports") {
+                SettingsToggleItem(
+                    title = "Daily Auto Export",
+                    description = "Automatically export data once per day",
+                    isChecked = prefs.autoExportEnabled,
+                    onToggle = onAutoExportEnabledChanged,
+                )
+
+                if (prefs.autoExportEnabled) {
+                    SettingsClickableItem(
+                        title = "Export Format",
+                        description = prefs.autoExportFormat.name,
+                        onClick = { showAutoFormatPicker = true },
+                    )
+
+                    SettingsClickableItem(
+                        title = "Time Range",
+                        description = prefs.autoExportRange.name.replace('_', ' '),
+                        onClick = { showAutoRangePicker = true },
+                    )
+
+                    SettingsToggleItem(
+                        title = "Anonymize Auto Exports",
+                        description = "Strip location data from scheduled exports",
+                        isChecked = prefs.autoExportAnonymize,
+                        onToggle = onAutoExportAnonymizeChanged,
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
             SettingsSection(title = "About") {
                 SettingsClickableItem(
                     title = "Version",
@@ -178,6 +220,32 @@ private fun SettingsContent(
             preferences = prefs,
             onDismiss = onDismissExportDialog,
             onExport = onExportRequested,
+        )
+    }
+
+    if (showAutoFormatPicker) {
+        EnumPickerDialog(
+            title = "Auto Export Format",
+            options = ExportFormat.entries.toTypedArray(),
+            selected = prefs.autoExportFormat,
+            onSelected = {
+                onAutoExportFormatChanged(it)
+                showAutoFormatPicker = false
+            },
+            onDismiss = { showAutoFormatPicker = false },
+        )
+    }
+
+    if (showAutoRangePicker) {
+        EnumPickerDialog(
+            title = "Auto Export Range",
+            options = ExportTimeRange.entries.toTypedArray(),
+            selected = prefs.autoExportRange,
+            onSelected = {
+                onAutoExportRangeChanged(it)
+                showAutoRangePicker = false
+            },
+            onDismiss = { showAutoRangePicker = false },
         )
     }
 }
@@ -296,6 +364,43 @@ private fun ExportStateObserver(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun <T : Enum<T>> EnumPickerDialog(
+    title: String,
+    options: Array<T>,
+    selected: T,
+    onSelected: (T) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(title) },
+        text = {
+            Column {
+                options.forEach { option ->
+                    androidx.compose.material3.ListItem(
+                        headlineContent = {
+                            Text(option.name.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() })
+                        },
+                        leadingContent = {
+                            androidx.compose.material3.RadioButton(
+                                selected = option == selected,
+                                onClick = { onSelected(option) },
+                            )
+                        },
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Close")
+            }
+        },
+    )
+}
+
 @Composable
 private fun SettingsSection(
     title: String,
@@ -409,6 +514,10 @@ private fun SettingsScreenPreview() {
             onActivityRecognitionToggled = {},
             onAnonymizeLocationToggled = {},
             onClearLocationData = {},
+            onAutoExportEnabledChanged = {},
+            onAutoExportFormatChanged = {},
+            onAutoExportRangeChanged = {},
+            onAutoExportAnonymizeChanged = {},
         )
     }
 }

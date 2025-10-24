@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.cmwen.min_activity_tracker.data.database.AppSessionEntity
+import io.cmwen.min_activity_tracker.data.preferences.UserPreferencesRepository
 import io.cmwen.min_activity_tracker.features.permissions.PermissionChecker
 import io.cmwen.min_activity_tracker.features.permissions.PermissionsScreen
 import io.cmwen.min_activity_tracker.features.tracking.TrackingService
@@ -23,6 +24,7 @@ import io.cmwen.min_activity_tracker.presentation.navigation.MainNavigation
 import io.cmwen.min_activity_tracker.presentation.ui.SessionRow
 import io.cmwen.min_activity_tracker.ui.theme.MinactivitytrackerTheme
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -31,6 +33,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var workScheduler: WorkScheduler
+
+    @Inject
+    lateinit var userPreferencesRepository: UserPreferencesRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,12 @@ class MainActivity : ComponentActivity() {
                         workScheduler.scheduleDataCollection()
                         workScheduler.scheduleDailyAnalysis()
                         workScheduler.scheduleWeeklyAnalysis()
+                        val prefs = userPreferencesRepository.preferencesFlow.first()
+                        if (prefs.autoExportEnabled) {
+                            workScheduler.scheduleAutoExport()
+                        } else {
+                            workScheduler.cancelAutoExportWork()
+                        }
                         startTrackingService()
                     }
                 }
@@ -77,6 +88,12 @@ class MainActivity : ComponentActivity() {
 
                 LaunchedEffect(hasPermissions) {
                     if (hasPermissions) {
+                        val prefs = userPreferencesRepository.preferencesFlow.first()
+                        if (prefs.autoExportEnabled) {
+                            workScheduler.scheduleAutoExport()
+                        } else {
+                            workScheduler.cancelAutoExportWork()
+                        }
                         startTrackingService()
                     }
                 }

@@ -117,10 +117,41 @@ class WorkScheduler
             workManager.cancelUniqueWork(DataCollectionWorker.WORK_NAME)
             workManager.cancelUniqueWork("${AnalysisWorker.WORK_NAME}_daily")
             workManager.cancelUniqueWork("${AnalysisWorker.WORK_NAME}_weekly")
+            workManager.cancelUniqueWork(AutoExportWorker.WORK_NAME)
         }
 
         fun cancelDataCollectionWork() {
             workManager.cancelUniqueWork(DataCollectionWorker.WORK_NAME)
+        }
+
+        fun scheduleAutoExport() {
+            val constraints =
+                Constraints
+                    .Builder()
+                    .setRequiresBatteryNotLow(true)
+                    .setRequiresStorageNotLow(true)
+                    .build()
+
+            val workRequest =
+                PeriodicWorkRequestBuilder<AutoExportWorker>(
+                    repeatInterval = 1,
+                    repeatIntervalTimeUnit = TimeUnit.DAYS,
+                ).setConstraints(constraints)
+                    .setBackoffCriteria(
+                        BackoffPolicy.EXPONENTIAL,
+                        WorkRequest.MIN_BACKOFF_MILLIS,
+                        TimeUnit.MILLISECONDS,
+                    ).build()
+
+            workManager.enqueueUniquePeriodicWork(
+                AutoExportWorker.WORK_NAME,
+                ExistingPeriodicWorkPolicy.UPDATE,
+                workRequest,
+            )
+        }
+
+        fun cancelAutoExportWork() {
+            workManager.cancelUniqueWork(AutoExportWorker.WORK_NAME)
         }
 
         /**

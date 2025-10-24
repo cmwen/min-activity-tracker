@@ -107,6 +107,7 @@ app/
 - **CSV**: Compatible with Excel, R, Python pandas
 - **Anonymization**: Optional removal of sensitive identifiers
 - **SQLite (planned)**: Direct database export for advanced analysis
+- **Automated Schedule**: Daily WorkManager job can export JSON/CSV with anonymization toggles
 
 ## Error Handling Philosophy
 - Direct error reporting in UI with clear messaging

@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Location privacy tools including anonymization defaults and one-tap history clearing
   - In-app export dialog with format selection and anonymization override
   - Activity Recognition background receiver with device event logging
+  - Automated daily exports (JSON/CSV) with anonymization preferences and WorkManager scheduling
   - Robolectric for unit testing Android components
 
 ### Changed

@@ -16,6 +16,7 @@ Min Activity Tracker helps you understand your digital habits by collecting deta
 - **Privacy First**: All data stored locally, no cloud dependencies
 - **Background Resilience**: Robust tracking that handles Android's background limitations
 - **Dark Mode**: Full Material 3 design with dark theme support
+- **Automated Exports**: Optional daily JSON/CSV exports with anonymization controls
 
 ## 🏗️ Architecture
 
@@ -62,6 +63,7 @@ Built with modern Android development practices:
 - **Battery Samples**: Battery level changes and charging state
 - **Device Events**: Screen on/off, charging events
 - **Location** (Optional): GPS coordinates for context
+- **Activity Recognition** (Optional): Driving, walking, or still context for sessions
 
 ### Data Storage
 - All data stored locally in SQLite database
@@ -94,6 +96,9 @@ Built with modern Android development practices:
 
 ### CSV Export
 Pre-configured for analysis tools like Excel, R, or Python pandas.
+
+### Automated Daily Exports
+Opt in from the Settings screen to generate a daily JSON or CSV export (with optional anonymization). Files are written to the app's `exports/` directory and can be shared manually.
 
 ## 🔧 Development
 
@@ -148,8 +153,8 @@ This project includes structured documentation for AI/LLM consumption. See [LLM.
 - [x] Data export functionality (JSON, CSV, anonymization)
 - [x] Export UI (manual exports with anonymization controls)
 - [x] Settings wiring & privacy controls (DataStore-backed)
+- [x] Automated daily export scheduling (opt-in)
 - [ ] Advanced analytics & insights surface
-- [ ] Export scheduling workflows
 - [ ] Final testing & polish
 
 See [Implementation Roadmap](docs/implementation-roadmap.md) for detailed progress.
