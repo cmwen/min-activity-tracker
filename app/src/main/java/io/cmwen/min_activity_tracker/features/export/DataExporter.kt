@@ -1,6 +1,7 @@
 package io.cmwen.min_activity_tracker.features.export
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.cmwen.min_activity_tracker.data.repository.BatterySampleRepository
 import io.cmwen.min_activity_tracker.data.repository.DeviceEventRepository
 import io.cmwen.min_activity_tracker.data.repository.SessionRepository
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class DataExporter
     @Inject
     constructor(
-        private val context: Context,
+        @ApplicationContext private val context: Context,
         private val sessionRepository: SessionRepository,
         private val batterySampleRepository: BatterySampleRepository,
         private val deviceEventRepository: DeviceEventRepository,

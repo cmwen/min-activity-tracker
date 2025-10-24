@@ -119,6 +119,10 @@ class WorkScheduler
             workManager.cancelUniqueWork("${AnalysisWorker.WORK_NAME}_weekly")
         }
 
+        fun cancelDataCollectionWork() {
+            workManager.cancelUniqueWork(DataCollectionWorker.WORK_NAME)
+        }
+
         /**
          * Check if data collection is currently scheduled
          */

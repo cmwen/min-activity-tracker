@@ -22,4 +22,6 @@ interface SessionRepository {
     suspend fun deleteById(id: String)
 
     suspend fun deleteSessionsOlderThan(timestamp: Long)
+
+    suspend fun clearLocationData()
 }

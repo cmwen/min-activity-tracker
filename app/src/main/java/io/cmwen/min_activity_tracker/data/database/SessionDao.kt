@@ -31,4 +31,7 @@ interface SessionDao {
 
     @Query("DELETE FROM app_sessions WHERE endTimestamp < :timestamp")
     suspend fun deleteSessionsOlderThan(timestamp: Long)
+
+    @Query("UPDATE app_sessions SET locationLatitude = NULL, locationLongitude = NULL")
+    suspend fun clearLocationData()
 }

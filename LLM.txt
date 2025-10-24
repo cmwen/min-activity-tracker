@@ -7,7 +7,8 @@ Min Activity Tracker is a privacy-first Android application for tracking phone a
 - Track app usage sessions with start/end times and duration
 - Monitor battery consumption correlated with app usage
 - Optional location tracking for context-aware insights
-- Export data in JSON, CSV, and SQLite formats
+- Optional activity recognition to capture motion context (walking, driving, still)
+- Export data in JSON and CSV formats (SQLite export planned)
 - Local-first architecture with no cloud dependencies
 
 ## Technical Architecture
@@ -69,21 +70,23 @@ Min Activity Tracker is a privacy-first Android application for tracking phone a
 ```
 app/
 ├── src/main/java/io/cmwen/min_activity_tracker/
-│   ├── data/              # Data layer (repositories, Room DAOs)
-│   ├── domain/            # Business logic (entities, use cases)
-│   ├── presentation/      # UI layer (Compose screens, ViewModels)
-│   ├── services/          # Background services
-│   └── utils/             # Utility classes
+│   ├── core/              # Shared error handling primitives
+│   ├── data/              # Room entities, DAOs, repositories, DataStore preferences
+│   ├── di/                # Hilt modules and application wiring
+│   ├── features/          # Feature modules (permissions, tracking, export, workers)
+│   ├── presentation/      # Compose screens, navigation, ViewModels
+│   ├── ui/                # Material 3 theming
+│   └── MainActivity.kt    # Entry point wiring permissions and navigation
 ├── src/test/              # Unit tests
 └── src/androidTest/       # Integration tests
 ```
 
 ## Development Stages
-1. **Foundation** (Weeks 1-2): Core infrastructure, database, basic UI
-2. **Data Collection** (Weeks 3-4): Permissions, background services, data tracking
-3. **Advanced Features** (Weeks 5-6): Location tracking, export system, analysis
-4. **Polish** (Weeks 7-8): Testing, optimization, production readiness
-5. **Open Source** (Week 9): CI/CD, documentation, community setup
+1. **Foundation** (Weeks 1-2) – ✅ Completed: Core infrastructure, database, basic UI.
+2. **Data Collection** (Weeks 3-4) – ✅ Completed: Permissions, background services, data tracking.
+3. **Advanced Features** (Weeks 5-6) – 🔄 In Progress: Export scheduling, analytics surfacing, advanced insights.
+4. **Polish** (Weeks 7-8) – ⏳ Planned: Testing, optimization, production readiness.
+5. **Open Source** (Week 9) – 🔄 Active: CI/CD, documentation, community setup.
 
 ## Performance Requirements
 - Battery usage: Maximum 5% daily drain
@@ -94,14 +97,16 @@ app/
 - Local-first data storage (no cloud by default)
 - Granular permission controls
 - Optional data anonymization in exports
+- DataStore-backed user controls for collection toggles
+- One-tap clearing of stored location coordinates
 - Open source for transparency
 - MIT license for maximum compatibility
 
 ## Export Capabilities
 - **JSON**: Structured data for programmatic analysis
 - **CSV**: Compatible with Excel, R, Python pandas
-- **SQLite**: Direct database export for advanced analysis
 - **Anonymization**: Optional removal of sensitive identifiers
+- **SQLite (planned)**: Direct database export for advanced analysis
 
 ## Error Handling Philosophy
 - Direct error reporting in UI with clear messaging
@@ -141,7 +146,7 @@ app/
 - MIT license allows broad contribution and usage
 - Clean Architecture enables modular development
 - Comprehensive testing framework supports confident changes
-- Open source community features (issues, discussions, wiki)
+- Open source tooling includes issue and PR templates; discussions/wiki pending
 
 ## Future Extensions
 - Wear OS companion app

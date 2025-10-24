@@ -12,6 +12,7 @@ import android.os.BatteryManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.cmwen.min_activity_tracker.data.preferences.UserPreferences
 import io.cmwen.min_activity_tracker.data.repository.BatterySampleRepository
 import io.cmwen.min_activity_tracker.data.repository.DeviceEventRepository
 import io.cmwen.min_activity_tracker.data.repository.SessionRepository
@@ -41,16 +42,25 @@ class DataCollector
         suspend fun collectUsageData(
             startTime: Long,
             endTime: Long,
+            preferences: UserPreferences,
         ) {
+            if (!preferences.collectAppUsage) {
+                return
+            }
             val usageEvents = usageStatsManager.queryEvents(startTime, endTime)
             val foregroundEvents = mutableMapOf<String, UsageEvents.Event>()
             val appSessions = mutableListOf<io.cmwen.min_activity_tracker.data.database.AppSessionEntity>()
 
             // Get current location (if permission granted)
-            val currentLocation = getCurrentLocationSafe()
+            val currentLocation =
+                if (preferences.collectLocation && !preferences.anonymizeLocationData) {
+                    getCurrentLocationSafe()
+                } else {
+                    null
+                }
 
             // Get current battery level
-            val batteryLevel = getCurrentBatteryLevel()
+            val batteryLevel = if (preferences.collectBattery) getCurrentBatteryLevel() else null
 
             while (usageEvents.hasNextEvent()) {
                 val event = UsageEvents.Event()
@@ -72,7 +82,7 @@ class DataCollector
                                 endTimestamp = event.timeStamp,
                                 durationMs = duration,
                                 startBatteryPct = batteryLevel,
-                                endBatteryPct = getCurrentBatteryLevel(),
+                                endBatteryPct = if (preferences.collectBattery) getCurrentBatteryLevel() else null,
                                 locationLatitude = currentLocation?.latitude,
                                 locationLongitude = currentLocation?.longitude,
                                 metadataJson = null,
@@ -93,7 +103,10 @@ class DataCollector
                 packageName
             }
 
-        suspend fun collectBatteryData() {
+        suspend fun collectBatteryData(preferences: UserPreferences) {
+            if (!preferences.collectBattery) {
+                return
+            }
             val batteryStatus: Intent? =
                 IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { iFilter ->
                     context.registerReceiver(null, iFilter)
@@ -180,14 +193,14 @@ class DataCollector
          * Collect comprehensive data snapshot at current time
          * Includes battery, location, and recent app usage
          */
-        suspend fun collectDataSnapshot() {
+        suspend fun collectDataSnapshot(preferences: UserPreferences) {
             val currentTime = System.currentTimeMillis()
             val oneHourAgo = currentTime - ONE_HOUR_MS
 
             // Collect battery data
-            collectBatteryData()
+            collectBatteryData(preferences)
 
             // Collect recent usage data
-            collectUsageData(oneHourAgo, currentTime)
+            collectUsageData(oneHourAgo, currentTime, preferences)
         }
     }

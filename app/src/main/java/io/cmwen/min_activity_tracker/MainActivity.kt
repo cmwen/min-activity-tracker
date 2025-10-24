@@ -1,5 +1,6 @@
 package io.cmwen.min_activity_tracker
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,10 +12,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.cmwen.min_activity_tracker.data.database.AppSessionEntity
 import io.cmwen.min_activity_tracker.features.permissions.PermissionChecker
 import io.cmwen.min_activity_tracker.features.permissions.PermissionsScreen
+import io.cmwen.min_activity_tracker.features.tracking.TrackingService
 import io.cmwen.min_activity_tracker.features.workers.WorkScheduler
 import io.cmwen.min_activity_tracker.presentation.navigation.MainNavigation
 import io.cmwen.min_activity_tracker.presentation.ui.SessionRow
@@ -45,6 +48,7 @@ class MainActivity : ComponentActivity() {
                         workScheduler.scheduleDataCollection()
                         workScheduler.scheduleDailyAnalysis()
                         workScheduler.scheduleWeeklyAnalysis()
+                        startTrackingService()
                     }
                 }
 
@@ -71,6 +75,12 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(permissionChecker.hasAllRequiredPermissions())
                     }
 
+                LaunchedEffect(hasPermissions) {
+                    if (hasPermissions) {
+                        startTrackingService()
+                    }
+                }
+
                 if (hasPermissions) {
                     MainNavigation()
                 } else {
@@ -82,6 +92,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun startTrackingService() {
+        val intent = Intent(this, TrackingService::class.java)
+        ContextCompat.startForegroundService(this, intent)
     }
 }
 

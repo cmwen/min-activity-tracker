@@ -26,4 +26,6 @@ class SessionRepositoryImpl(
     override suspend fun deleteById(id: String) = dao.deleteById(id)
 
     override suspend fun deleteSessionsOlderThan(timestamp: Long) = dao.deleteSessionsOlderThan(timestamp)
+
+    override suspend fun clearLocationData() = dao.clearLocationData()
 }

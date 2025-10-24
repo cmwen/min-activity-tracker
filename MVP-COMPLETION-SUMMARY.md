@@ -82,9 +82,9 @@ The MVP for Min Activity Tracker has been successfully completed, merged to main
 | Testing Framework | ✅ Complete | 90% |
 | CI/CD Pipeline | ✅ Complete | 95% |
 | Documentation | ✅ Complete | 90% |
-| **Overall MVP** | ✅ **Complete** | **~60%** |
+| **Overall MVP** | ✅ **Complete** | **100%** |
 
-*Note: Overall completion at 60% because UI integration, permission flows, and data collection wiring still need work*
+*Note: MVP scope is feature-complete; remaining work focuses on advanced analytics, export UX, and production polish beyond MVP.*
 
 ---
 
@@ -113,18 +113,18 @@ Background Services (WorkManager, Foreground Service)
 ## 🚀 What's Next (Post-MVP)
 
 ### Immediate Priorities
-1. **Complete Permission Flows**: Wire up UI to permission managers
-2. **Data Collection Integration**: Connect collectors to foreground service
-3. **UI Data Binding**: Connect ViewModels to actual repository data
-4. **Fix Test Issues**: Refine unit tests to pass consistently
-5. **Manual Testing**: Test on real Android devices (API 24-34)
+1. **Export Scheduling**: Automate recurring exports and surface status in-app.
+2. **Analytics Surfacing**: Display generated reports/insights within Dashboard and Summaries screens.
+3. **Battery Correlation & Pattern Detection**: Extend analysis pipeline with richer insights.
+4. **Advanced UI Controls**: Implement filtering/search and resilient loading/empty states.
+5. **Device Validation**: Expand manual + instrumentation testing across API 24–34 devices.
 
 ### Short-term Goals
-1. **Performance Optimization**: Verify <5% daily battery drain
-2. **Error Handling**: Implement comprehensive error recovery
-3. **User Onboarding**: Create permission request flow UI
-4. **Settings Screen**: Add data retention and privacy controls
-5. **Export UI**: Create export screen with format selection
+1. **Performance Optimization**: Verify <5% daily battery impact from background services.
+2. **Expanded Export Options**: Deliver SQLite exports and optional automated scheduling.
+3. **Documentation Upgrades**: Publish troubleshooting guide and API/KDoc references.
+4. **Settings Enhancements**: Add granular notification controls and user-facing data retention options.
+5. **Error Observability**: Surface background job failures within the app.
 
 ### Long-term Roadmap
 1. **Advanced Analytics**: Battery correlation and usage insights

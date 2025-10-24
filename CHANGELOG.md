@@ -38,6 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Play Services Location for location tracking
   - Accompanist Permissions for permission handling
   - Truth assertions for better test readability
+- User-facing controls
+  - DataStore-backed settings for app usage, battery, location, and activity recognition toggles
+  - Location privacy tools including anonymization defaults and one-tap history clearing
+  - In-app export dialog with format selection and anonymization override
+  - Activity Recognition background receiver with device event logging
   - Robolectric for unit testing Android components
 
 ### Changed

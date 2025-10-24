@@ -11,7 +11,8 @@ Min Activity Tracker helps you understand your digital habits by collecting deta
 - **App Usage Tracking**: Detailed session recording with foreground/background detection
 - **Battery Monitoring**: Correlate app usage with battery consumption
 - **Location Context**: Optional location tracking for usage pattern analysis
-- **Data Export**: JSON, CSV, and SQLite exports for external analysis
+- **Activity Recognition**: Optional motion context from Activity Recognition API
+- **Data Export**: JSON and CSV exports (SQLite export planned)
 - **Privacy First**: All data stored locally, no cloud dependencies
 - **Background Resilience**: Robust tracking that handles Android's background limitations
 - **Dark Mode**: Full Material 3 design with dark theme support
@@ -133,19 +134,22 @@ This project includes structured documentation for AI/LLM consumption. See [LLM.
 
 ## 🏗️ Current Status
 
-**Development Stage**: Stage 2 - Active Development
+**Development Stage**: Stage 3 - Advanced Features & Insights (In Progress)
 - [x] Requirements & design documents
 - [x] Architecture planning
 - [x] Core infrastructure (Database, DI, Navigation)
 - [x] Error handling framework
 - [x] Testing framework setup
 - [x] CI/CD pipeline configuration
-- [x] WorkManager background jobs
-- [x] Data export functionality (JSON, CSV)
-- [x] Comprehensive test coverage
-- [ ] Data collection implementation (In Progress)
-- [ ] UI development (In Progress)
-- [ ] Permission management flows
+- [x] WorkManager background jobs & analytics pipeline
+- [x] Data collection implementation (usage stats, battery, device events, location enrichment)
+- [x] Permission management flows and onboarding
+- [x] Compose UI foundations (Dashboard, Sessions, Summaries, Settings)
+- [x] Data export functionality (JSON, CSV, anonymization)
+- [x] Export UI (manual exports with anonymization controls)
+- [x] Settings wiring & privacy controls (DataStore-backed)
+- [ ] Advanced analytics & insights surface
+- [ ] Export scheduling workflows
 - [ ] Final testing & polish
 
 See [Implementation Roadmap](docs/implementation-roadmap.md) for detailed progress.

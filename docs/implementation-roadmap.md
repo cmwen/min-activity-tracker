@@ -11,7 +11,7 @@
    - [x] Set up Room database configuration
    - [x] Configure build scripts for testing frameworks
    - [x] Add detekt configuration (in-progress triage)
-   - [ ] Add ktlint for code quality (blocked by classpath version conflicts; needs resolution in future iteration)
+   - [x] Add ktlint for code quality (Gradle plugin configured with CLI 1.7.1)
 
 2. **Database Layer**
    - [x] Define Room entities (AppSession, DeviceEvent, BatterySample, AnalysisReport)
@@ -45,7 +45,7 @@
 
 Detekt & formatting status (developer notes):
 - Detekt is configured; triage is in progress — many noisy rules were temporarily relaxed to allow incremental fixes. Current detekt overall debt has been reduced through targeted fixes (naming, magic numbers, new-line EOFs, spread operator). A final pass will re-enable config validation and tighten rules.
-- Ktlint integration attempted but temporarily removed due to version conflicts with current Gradle setup; proper version coordinates need to be determined and applied in future iteration.
+- Ktlint plugin is active in the build; enforcement now runs via `./gradlew ktlintCheck` with CLI 1.7.1 and HTML reporting.
 
 ---
 
@@ -54,38 +54,38 @@ Detekt & formatting status (developer notes):
 
 #### Tasks:
 1. **Permission Management**
-   - [ ] Implement permission request flows
-   - [ ] Create Usage Access Settings navigation
-   - [ ] Add permission status checking
-   - [ ] Create onboarding flow for permissions
-   - [ ] Handle runtime permission changes
+   - [x] Implement permission request flows
+   - [x] Create Usage Access Settings navigation
+   - [x] Add permission status checking
+   - [x] Create onboarding flow for permissions
+   - [x] Handle runtime permission changes
 
 2. **Core Data Collection**
-   - [ ] Implement UsageStatsManager integration
-   - [ ] Create app session tracking logic
-   - [ ] Add battery monitoring service
-   - [ ] Implement device event tracking (screen on/off)
-   - [ ] Create basic data collection service
+   - [x] Implement UsageStatsManager integration
+   - [x] Create app session tracking logic
+   - [x] Add battery monitoring service
+   - [x] Implement device event tracking (screen on/off)
+   - [x] Create basic data collection service
 
 3. **Background Services**
-   - [ ] Implement foreground service for tracking
-   - [ ] Set up WorkManager for periodic tasks
-   - [ ] Add service lifecycle management
-   - [ ] Implement service restart mechanisms
-   - [ ] Add background work error handling
+   - [x] Implement foreground service for tracking
+   - [x] Set up WorkManager for periodic tasks
+   - [x] Add service lifecycle management
+   - [x] Implement service restart mechanisms
+   - [x] Add background work error handling
 
 4. **Data Display**
-   - [ ] Create timeline view for sessions
-   - [ ] Add per-app usage summaries
-   - [ ] Implement basic charts for data visualization
-   - [ ] Add real-time data updates in UI
+   - [x] Create timeline view for sessions
+   - [x] Add per-app usage summaries
+   - [x] Implement basic charts for data visualization
+   - [x] Add real-time data updates in UI
 
 **Deliverables**:
-- Working permission request flows
-- Basic app usage tracking functional
-- Background service collecting data
-- UI displaying collected data
-- Battery monitoring working
+- [x] Working permission request flows
+- [x] Basic app usage tracking functional
+- [x] Background service collecting data
+- [x] UI displaying collected data
+- [x] Battery monitoring working
 
 ---
 
@@ -94,39 +94,40 @@ Detekt & formatting status (developer notes):
 
 #### Tasks:
 1. **Location & Context Data**
-   - [ ] Implement optional location tracking
-   - [ ] Add activity recognition integration
-   - [ ] Create location permission flows
-   - [ ] Add location data to session records
-   - [ ] Implement location privacy controls
+   - [x] Implement optional location tracking
+   - [x] Add activity recognition integration
+   - [x] Create location permission flows
+   - [x] Add location data to session records
+   - [x] Implement location privacy controls
 
 2. **Data Export System**
-   - [ ] Create JSON export functionality
-   - [ ] Implement CSV export with customization
+   - [x] Create JSON export functionality
+   - [x] Implement CSV export with customization
    - [ ] Add SQLite database export
    - [ ] Create export scheduling options
-   - [ ] Add data anonymization features
+   - [x] Implement in-app export UI with anonymization controls
+   - [x] Add data anonymization features
 
 3. **Analysis & Reporting**
-   - [ ] Implement daily/weekly summary generation
+   - [x] Implement daily/weekly summary generation
    - [ ] Create battery usage correlation analysis
    - [ ] Add usage pattern detection
-   - [ ] Generate analysis reports
+   - [x] Generate analysis reports
    - [ ] Create report viewing UI
 
 4. **Advanced UI Features**
    - [ ] Add advanced filtering and search
-   - [ ] Implement data visualization improvements
-   - [ ] Create settings and preferences screen
+   - [x] Implement data visualization improvements (initial pie chart)
+   - [x] Create settings and preferences screen (wiring toggles & persistence)
    - [ ] Add app usage insights
    - [ ] Improve loading states and animations
 
 **Deliverables**:
-- Complete export functionality (JSON, CSV, SQLite)
-- Optional location tracking working
-- Analysis reports generation
-- Advanced UI with filtering and insights
-- Settings and preferences management
+- [ ] Complete export functionality (JSON, CSV, SQLite)
+- [x] Optional location tracking working
+- [x] Analysis reports generation (background workers producing summaries)
+- [ ] Advanced UI with filtering and insights
+- [x] Settings and preferences management (DataStore-backed toggles & privacy controls)
 
 ---
 
@@ -176,39 +177,39 @@ Detekt & formatting status (developer notes):
 
 #### Tasks:
 1. **Open Source Preparation**
-   - [ ] Add MIT license file
-   - [ ] Create comprehensive README.md
-   - [ ] Add CONTRIBUTING.md guidelines
-   - [ ] Create issue and PR templates
-   - [ ] Add code of conduct
+   - [x] Add MIT license file
+   - [x] Create comprehensive README.md
+   - [x] Add CONTRIBUTING.md guidelines
+   - [x] Create issue and PR templates
+   - [x] Add code of conduct (documented within CONTRIBUTING.md)
 
 2. **CI/CD Pipeline**
-   - [ ] Set up GitHub Actions workflows
-   - [ ] Configure automated testing on PRs
-   - [ ] Add automated code quality checks
-   - [ ] Set up automated release builds
-   - [ ] Configure security scanning
+   - [x] Set up GitHub Actions workflows
+   - [x] Configure automated testing on PRs
+   - [x] Add automated code quality checks
+   - [x] Set up automated release builds
+   - [x] Configure security scanning
 
 3. **Documentation Completion**
    - [ ] Create API documentation
    - [ ] Add code comments and KDoc
-   - [ ] Create setup and installation guides
+   - [x] Create setup and installation guides
    - [ ] Add troubleshooting documentation
-   - [ ] Create LLM.txt for AI consumption
+   - [x] Create LLM.txt for AI consumption
 
 4. **Community Features**
    - [ ] Set up GitHub Discussions
    - [ ] Create project wiki
    - [ ] Add contributor recognition
    - [ ] Set up automated dependency updates
-   - [ ] Create release notes automation
+   - [x] Create release notes automation
 
 **Deliverables**:
-- Complete open source project
-- Automated CI/CD pipeline
-- Comprehensive documentation
-- Community-ready repository
-- Automated maintenance tools
+- [x] Complete open source project docs (README, CONTRIBUTING, LICENSE)
+- [x] Automated CI/CD pipeline (ci.yml, release.yml)
+- [ ] Comprehensive documentation (API reference & troubleshooting)
+- [ ] Community-ready repository (discussions/wiki pending)
+- [ ] Automated maintenance tools (dependency updates)
 
 ---
 
@@ -222,18 +223,18 @@ Detekt & formatting status (developer notes):
 - [x] Dark mode toggle works
 
 ### Stage 2 Success Criteria:
-- [ ] App successfully requests and handles Usage Access permission
-- [ ] Background service collects app usage data
-- [ ] Battery monitoring records samples
-- [ ] UI displays real collected data
-- [ ] Permissions can be toggled without crashes
+- [x] App successfully requests and handles Usage Access permission
+- [x] Background service collects app usage data
+- [x] Battery monitoring records samples
+- [x] UI displays real collected data
+- [x] Permissions can be toggled without crashes
 
 ### Stage 3 Success Criteria:
-- [ ] Location tracking works when enabled
-- [ ] Export generates valid JSON and CSV files
-- [ ] Analysis reports are created automatically
+- [x] Location tracking works when enabled
+- [x] Export generates valid JSON and CSV files
+- [x] Analysis reports are created automatically
 - [ ] Advanced filtering works in UI
-- [ ] Settings persist between app launches
+- [x] Settings persist between app launches
 
 ### Stage 4 Success Criteria:
 - [ ] Battery usage is under 5% daily drain

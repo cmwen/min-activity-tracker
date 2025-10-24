@@ -21,19 +21,17 @@ class PermissionManager
     ) {
         companion object {
             val allPermissions =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    listOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.POST_NOTIFICATIONS,
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.FOREGROUND_SERVICE,
-                    )
-                } else {
-                    listOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.POST_NOTIFICATIONS,
-                        Manifest.permission.READ_PHONE_STATE,
-                    )
+                buildList {
+                    add(Manifest.permission.ACCESS_FINE_LOCATION)
+                    add(Manifest.permission.ACCESS_COARSE_LOCATION)
+                    add(Manifest.permission.POST_NOTIFICATIONS)
+                    add(Manifest.permission.READ_PHONE_STATE)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        add(Manifest.permission.FOREGROUND_SERVICE)
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        add(Manifest.permission.ACTIVITY_RECOGNITION)
+                    }
                 }
         }
 
