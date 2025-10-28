@@ -32,11 +32,6 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          packages: |
-            platform-tools
-            platforms;android-36
-            build-tools;36.0.0
 
       - name: Cache Gradle packages
         uses: actions/cache@v4
@@ -68,6 +63,28 @@ jobs:
       - name: Build release APK
         run: ./gradlew assembleRelease
 
+      - name: Detect build tools version
+        id: build_tools
+        shell: bash
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          if [ -z "$SDK_ROOT" ]; then
+            echo "::error::ANDROID_SDK_ROOT/ANDROID_HOME not set."
+            exit 1
+          fi
+          if [ ! -d "$SDK_ROOT/build-tools" ]; then
+            echo "::error::No build-tools directory found under $SDK_ROOT"
+            ls -al "$SDK_ROOT"
+            exit 1
+          fi
+          VERSION=$(ls -1 "$SDK_ROOT/build-tools" | sort -V | tail -n1)
+          if [ -z "$VERSION" ]; then
+            echo "::error::Failed to detect build tools version."
+            exit 1
+          fi
+          echo "Detected build tools version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Sign release APK
         id: sign_app
         uses: r0adkll/sign-android-release@v1
@@ -77,7 +94,8 @@ jobs:
           alias: ${{ env.KEY_ALIAS }}
           keyStorePassword: ${{ env.KEY_STORE_PASSWORD }}
           keyPassword: ${{ env.KEY_PASSWORD }}
-          buildToolsVersion: 36.0.0
+        env:
+          BUILD_TOOLS_VERSION: ${{ steps.build_tools.outputs.version }}
 
       - name: Prepare artifacts
         id: prepare
