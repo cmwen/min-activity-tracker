@@ -1,0 +1,45 @@
+version: 2
+
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 3
+    groups:
+      compose-androidx:
+        patterns:
+          - "androidx.*"
+          - "com.google.android.material*"
+      kotlin-tooling:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "com.google.devtools.ksp*"
+      google-services:
+        patterns:
+          - "com.google.android.*"
+          - "com.google.dagger*"
+          - "com.google.guava*"
+          - "com.google.firebase*"
+      testing:
+        patterns:
+          - "junit*"
+          - "io.mockk*"
+          - "com.google.truth*"
+          - "app.cash.turbine*"
+          - "androidx.test.*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+      time: "04:00"
+      timezone: "UTC"
+    groups:
+      actions:
+        patterns:
+          - "*"
