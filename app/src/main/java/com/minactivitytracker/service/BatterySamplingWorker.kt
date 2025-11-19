@@ -12,14 +12,21 @@ import com.minactivitytracker.repository.BatteryRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
+import com.minactivitytracker.repository.SettingsRepository
+import kotlinx.coroutines.flow.first
+
 @HiltWorker
 class BatterySamplingWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val repository: BatteryRepository
+    private val repository: BatteryRepository,
+    private val settingsRepository: SettingsRepository
 ) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
+        if (!settingsRepository.isBatteryTrackingEnabled.first()) {
+            return Result.success()
+        }
         val batteryStatus: Intent? = applicationContext.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         
         val level: Int = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1

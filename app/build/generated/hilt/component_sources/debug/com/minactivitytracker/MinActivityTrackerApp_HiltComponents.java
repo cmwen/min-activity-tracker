@@ -7,6 +7,7 @@ import com.minactivitytracker.service.BootReceiver_GeneratedInjector;
 import com.minactivitytracker.ui.applist.AppListViewModel_HiltModules;
 import com.minactivitytracker.ui.export.ExportViewModel_HiltModules;
 import com.minactivitytracker.ui.home.HomeViewModel_HiltModules;
+import com.minactivitytracker.ui.settings.SettingsViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -167,7 +168,8 @@ public final class MinActivityTrackerApp_HiltComponents {
           HiltWrapper_SavedStateHandleModule.class,
           HomeViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
-          ViewModelCBuilderModule.class
+          ViewModelCBuilderModule.class,
+          SettingsViewModel_HiltModules.KeyModule.class
       }
   )
   @ActivityRetainedScoped
@@ -206,7 +208,8 @@ public final class MinActivityTrackerApp_HiltComponents {
           AppListViewModel_HiltModules.BindsModule.class,
           ExportViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
-          HomeViewModel_HiltModules.BindsModule.class
+          HomeViewModel_HiltModules.BindsModule.class,
+          SettingsViewModel_HiltModules.BindsModule.class
       }
   )
   @ViewModelScoped

@@ -17,6 +17,7 @@ import com.minactivitytracker.di.DatabaseModule_ProvideAppDatabaseFactory;
 import com.minactivitytracker.di.DatabaseModule_ProvideAppSessionDaoFactory;
 import com.minactivitytracker.di.DatabaseModule_ProvideDeviceEventDaoFactory;
 import com.minactivitytracker.repository.ActivityRepository;
+import com.minactivitytracker.repository.SettingsRepository;
 import com.minactivitytracker.service.BootReceiver;
 import com.minactivitytracker.ui.applist.AppListViewModel;
 import com.minactivitytracker.ui.applist.AppListViewModel_HiltModules;
@@ -24,6 +25,8 @@ import com.minactivitytracker.ui.export.ExportViewModel;
 import com.minactivitytracker.ui.export.ExportViewModel_HiltModules;
 import com.minactivitytracker.ui.home.HomeViewModel;
 import com.minactivitytracker.ui.home.HomeViewModel_HiltModules;
+import com.minactivitytracker.ui.settings.SettingsViewModel;
+import com.minactivitytracker.ui.settings.SettingsViewModel_HiltModules;
 import dagger.hilt.android.ActivityRetainedLifecycle;
 import dagger.hilt.android.ViewModelLifecycle;
 import dagger.hilt.android.internal.builders.ActivityComponentBuilder;
@@ -384,7 +387,7 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(3).put(LazyClassKeyProvider.com_minactivitytracker_ui_applist_AppListViewModel, AppListViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_minactivitytracker_ui_export_ExportViewModel, ExportViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_minactivitytracker_ui_home_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).build());
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(4).put(LazyClassKeyProvider.com_minactivitytracker_ui_applist_AppListViewModel, AppListViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_minactivitytracker_ui_export_ExportViewModel, ExportViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_minactivitytracker_ui_home_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_minactivitytracker_ui_settings_SettingsViewModel, SettingsViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -404,17 +407,22 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_minactivitytracker_ui_home_HomeViewModel = "com.minactivitytracker.ui.home.HomeViewModel";
+      static String com_minactivitytracker_ui_settings_SettingsViewModel = "com.minactivitytracker.ui.settings.SettingsViewModel";
 
       static String com_minactivitytracker_ui_export_ExportViewModel = "com.minactivitytracker.ui.export.ExportViewModel";
+
+      static String com_minactivitytracker_ui_home_HomeViewModel = "com.minactivitytracker.ui.home.HomeViewModel";
 
       static String com_minactivitytracker_ui_applist_AppListViewModel = "com.minactivitytracker.ui.applist.AppListViewModel";
 
       @KeepFieldType
-      HomeViewModel com_minactivitytracker_ui_home_HomeViewModel2;
+      SettingsViewModel com_minactivitytracker_ui_settings_SettingsViewModel2;
 
       @KeepFieldType
       ExportViewModel com_minactivitytracker_ui_export_ExportViewModel2;
+
+      @KeepFieldType
+      HomeViewModel com_minactivitytracker_ui_home_HomeViewModel2;
 
       @KeepFieldType
       AppListViewModel com_minactivitytracker_ui_applist_AppListViewModel2;
@@ -434,6 +442,8 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
 
     private Provider<HomeViewModel> homeViewModelProvider;
 
+    private Provider<SettingsViewModel> settingsViewModelProvider;
+
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam,
         ViewModelLifecycle viewModelLifecycleParam) {
@@ -450,11 +460,12 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
       this.appListViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
       this.exportViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
       this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
+      this.settingsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(3).put(LazyClassKeyProvider.com_minactivitytracker_ui_applist_AppListViewModel, ((Provider) appListViewModelProvider)).put(LazyClassKeyProvider.com_minactivitytracker_ui_export_ExportViewModel, ((Provider) exportViewModelProvider)).put(LazyClassKeyProvider.com_minactivitytracker_ui_home_HomeViewModel, ((Provider) homeViewModelProvider)).build());
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(4).put(LazyClassKeyProvider.com_minactivitytracker_ui_applist_AppListViewModel, ((Provider) appListViewModelProvider)).put(LazyClassKeyProvider.com_minactivitytracker_ui_export_ExportViewModel, ((Provider) exportViewModelProvider)).put(LazyClassKeyProvider.com_minactivitytracker_ui_home_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_minactivitytracker_ui_settings_SettingsViewModel, ((Provider) settingsViewModelProvider)).build());
     }
 
     @Override
@@ -464,17 +475,22 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_minactivitytracker_ui_home_HomeViewModel = "com.minactivitytracker.ui.home.HomeViewModel";
-
       static String com_minactivitytracker_ui_export_ExportViewModel = "com.minactivitytracker.ui.export.ExportViewModel";
+
+      static String com_minactivitytracker_ui_settings_SettingsViewModel = "com.minactivitytracker.ui.settings.SettingsViewModel";
+
+      static String com_minactivitytracker_ui_home_HomeViewModel = "com.minactivitytracker.ui.home.HomeViewModel";
 
       static String com_minactivitytracker_ui_applist_AppListViewModel = "com.minactivitytracker.ui.applist.AppListViewModel";
 
       @KeepFieldType
-      HomeViewModel com_minactivitytracker_ui_home_HomeViewModel2;
+      ExportViewModel com_minactivitytracker_ui_export_ExportViewModel2;
 
       @KeepFieldType
-      ExportViewModel com_minactivitytracker_ui_export_ExportViewModel2;
+      SettingsViewModel com_minactivitytracker_ui_settings_SettingsViewModel2;
+
+      @KeepFieldType
+      HomeViewModel com_minactivitytracker_ui_home_HomeViewModel2;
 
       @KeepFieldType
       AppListViewModel com_minactivitytracker_ui_applist_AppListViewModel2;
@@ -509,6 +525,9 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
 
           case 2: // com.minactivitytracker.ui.home.HomeViewModel 
           return (T) new HomeViewModel(singletonCImpl.activityRepositoryProvider.get());
+
+          case 3: // com.minactivitytracker.ui.settings.SettingsViewModel 
+          return (T) new SettingsViewModel(singletonCImpl.settingsRepositoryProvider.get());
 
           default: throw new AssertionError(id);
         }
@@ -594,6 +613,8 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
 
     private Provider<ActivityRepository> activityRepositoryProvider;
 
+    private Provider<SettingsRepository> settingsRepositoryProvider;
+
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
       initialize(applicationContextModuleParam);
@@ -616,6 +637,7 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
     private void initialize(final ApplicationContextModule applicationContextModuleParam) {
       this.provideAppDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<AppDatabase>(singletonCImpl, 1));
       this.activityRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<ActivityRepository>(singletonCImpl, 0));
+      this.settingsRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<SettingsRepository>(singletonCImpl, 2));
     }
 
     @Override
@@ -666,6 +688,9 @@ public final class DaggerMinActivityTrackerApp_HiltComponents_SingletonC {
 
           case 1: // com.minactivitytracker.data.AppDatabase 
           return (T) DatabaseModule_ProvideAppDatabaseFactory.provideAppDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 2: // com.minactivitytracker.repository.SettingsRepository 
+          return (T) new SettingsRepository(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
           default: throw new AssertionError(id);
         }
