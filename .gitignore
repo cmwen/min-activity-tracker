@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Keystore files (managed by CI/CD)
+*.keystore
+*.keystore.b64
+
+# Build logs
+ksp_error.log
