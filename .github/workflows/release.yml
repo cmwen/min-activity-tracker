@@ -61,7 +61,10 @@ jobs:
           fi
 
       - name: Build release APK
-        run: ./gradlew assembleRelease
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          ./gradlew assembleRelease -PversionName="$VERSION" -PversionCode="${{ github.run_number }}"
 
       - name: Detect build tools version
         id: build_tools

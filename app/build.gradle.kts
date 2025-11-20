@@ -13,8 +13,11 @@ android {
         applicationId = "com.minactivitytracker"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        val pVersionCode = project.findProperty("versionCode") as? String
+        val pVersionName = project.findProperty("versionName") as? String
+
+        versionCode = pVersionCode?.toIntOrNull() ?: 2
+        versionName = pVersionName ?: "2.0.1"
 
         testInstrumentationRunner = "com.minactivitytracker.HiltTestRunner"
         vectorDrawables {
