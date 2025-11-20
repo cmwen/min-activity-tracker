@@ -91,6 +91,14 @@ dependencies {
     // DataStore
     implementation(libs.androidx.datastore.preferences)
 
+    // Location
+    implementation(libs.play.services.location)
+
+    // Charts
+    implementation(libs.vico.compose)
+    implementation(libs.vico.compose.m3)
+    implementation(libs.vico.core)
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
