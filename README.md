@@ -8,15 +8,30 @@ Min Activity Tracker helps you understand your digital habits by collecting deta
 
 ## ✨ Features
 
+### Core Tracking
 - **App Usage Tracking**: Detailed session recording with foreground/background detection
 - **Battery Monitoring**: Correlate app usage with battery consumption
-- **Location Context**: Optional location tracking for usage pattern analysis
+- **Location Context**: Battery-efficient location tracking for usage pattern analysis
 - **Activity Recognition**: Optional motion context from Activity Recognition API
+
+### Enhanced Analytics
+- **Category Classification**: Automatic categorization into 14+ types (Productivity, Social, Games, etc.)
+- **Visual Charts**: Beautiful Material 3 charts showing usage patterns
+- **Time Period Filters**: View usage by day, week, month, or all time
+- **Smart Summaries**: Quick overview cards with key metrics
+- **Top Apps**: See your most-used apps with detailed statistics
+
+### Data & Privacy
 - **Data Export**: JSON and CSV exports (SQLite export planned)
 - **Privacy First**: All data stored locally, no cloud dependencies
-- **Background Resilience**: Robust tracking that handles Android's background limitations
-- **Dark Mode**: Full Material 3 design with dark theme support
 - **Automated Exports**: Optional daily JSON/CSV exports with anonymization controls
+- **User Control**: Granular control over what gets tracked
+
+### User Experience
+- **Material 3 Design**: Modern, beautiful UI with dark theme support
+- **Responsive Layout**: Optimized for all Android devices
+- **Background Resilience**: Robust tracking that handles Android's background limitations
+- **Efficient**: Battery-optimized background processing
 
 ## 🏗️ Architecture
 
@@ -120,6 +135,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed development guidelines.
 
 ## 📖 Documentation
 
+- [Features Guide](docs/features.md) - Detailed feature documentation
 - [Product Requirements](docs/product-requirements-design.md)
 - [UX Design Guidelines](docs/ux-design.md)
 - [Software Architecture](docs/software-architecture-design.md)
