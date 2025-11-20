@@ -6,6 +6,7 @@ import com.minactivitytracker.data.AppDatabase
 import com.minactivitytracker.data.dao.AppSessionDao
 import com.minactivitytracker.data.dao.BatterySampleDao
 import com.minactivitytracker.data.dao.DeviceEventDao
+import com.minactivitytracker.data.dao.LocationSampleDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +25,8 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "min_activity_tracker.db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+        .build()
     }
 
     @Provides
@@ -35,4 +37,7 @@ object DatabaseModule {
 
     @Provides
     fun provideBatterySampleDao(database: AppDatabase): BatterySampleDao = database.batterySampleDao()
+
+    @Provides
+    fun provideLocationSampleDao(database: AppDatabase): LocationSampleDao = database.locationSampleDao()
 }
